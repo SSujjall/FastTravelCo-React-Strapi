@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "CheckInDate": {
+      "type": "date"
+    },
+    "CheckOutDate": {
+      "type": "date"
+    },
+    "NumberOfGuests": {
+      "type": "integer"
+    },
+    "CurrentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Pending,",
+        "Confirmed,",
+        "Cancelled"
+      ]
+    },
+    "destination": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::destination.destination",
+      "inversedBy": "bookings"
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment",
+      "mappedBy": "booking"
+    }
+  }
+}

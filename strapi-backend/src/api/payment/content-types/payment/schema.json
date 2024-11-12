@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "singularName": "payment",
+    "pluralName": "payments",
+    "displayName": "Payment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Amount": {
+      "type": "integer"
+    },
+    "PaymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "COD,",
+        "Online"
+      ]
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::booking.booking",
+      "inversedBy": "payment"
+    }
+  }
+}
