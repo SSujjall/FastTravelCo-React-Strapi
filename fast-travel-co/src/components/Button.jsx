@@ -1,4 +1,5 @@
-// eslint-disable-next-line react/prop-types
+/* eslint-disable react/prop-types */
+import "../css/Button.css";
 export const Button = ({ text, onClick, icon, className }) => {
   return (
     <button className={`button ${className}`} onClick={onClick}>

@@ -1,6 +1,23 @@
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Button } from "./Button"; // import your Button component
 
-const SearchSection = () => {
+const SearchSection = ({ setSearchCriteria }) => {
+  const [location, setLocation] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("");
+
+  const handleSearch = () => {
+    const searchCriteria = {
+      location,
+      checkIn,
+      checkOut,
+      guests,
+    };
+    setSearchCriteria(searchCriteria);
+  };
+
   return (
     <div className="px-4 py-6">
       <h2 className="text-4xl font-bold text-center mb-8">
@@ -11,7 +28,13 @@ const SearchSection = () => {
           {/* Section 1 */}
           <div className="flex items-center space-x-2">
             <span className="material-icons">location_on</span>
-            <span>Where is your next destination?</span>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Enter location"
+              className="border rounded p-2"
+            />
           </div>
 
           <div className="hidden sm:block mx-4 h-16 border-l border-gray-400"></div>
@@ -19,7 +42,18 @@ const SearchSection = () => {
           {/* Section 2 (Hidden on mobile) */}
           <div className="hidden sm:flex items-center space-x-2">
             <span className="material-icons">calendar_today</span>
-            <span>Check in Date - Check out Date</span>
+            <input
+              type="date"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              className="border rounded p-2"
+            />
+            <input
+              type="date"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              className="border rounded p-2"
+            />
           </div>
 
           <div className="hidden sm:block mx-4 h-16 border-l border-gray-400"></div>
@@ -27,14 +61,20 @@ const SearchSection = () => {
           {/* Section 3 (Hidden on mobile) */}
           <div className="hidden sm:flex items-center space-x-2">
             <span className="material-icons">people</span>
-            <span>No. of guests</span>
+            <input
+              type="number"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              placeholder="Guests"
+              className="border rounded p-2"
+            />
           </div>
 
           {/* Search Button */}
           <div className="flex items-center space-x-2">
             <Button
               text="Search"
-              onClick={() => console.log("Search clicked")}
+              onClick={handleSearch}
               icon="search"
               className="bg-black text-white hover:bg-slate-600 w-auto min-w-[120px]"
             />

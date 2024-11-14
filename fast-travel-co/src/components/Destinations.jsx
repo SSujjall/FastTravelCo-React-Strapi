@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Home, Building2, Castle, Building, Tent } from "lucide-react";
@@ -5,7 +6,7 @@ import { Button } from "./Button";
 import { destinationService } from "../services/Api";
 import DestinationCard from "./DestinationCard";
 
-const Destinations = () => {
+const Destinations = ({ searchCriteria }) => {
   const [activeFilter, setActiveFilter] = useState("house");
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const Destinations = () => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const data = await destinationService.getDestinations();
+        const data = await destinationService.getDestinations(searchCriteria);
         setDestinations(data);
         setLoading(false);
       } catch (err) {
@@ -24,20 +25,22 @@ const Destinations = () => {
     };
 
     fetchDestinations();
-  }, []);
+  }, [searchCriteria]);
 
   const filters = [
     { id: "house", icon: Home, label: "House" },
     { id: "hotel", icon: Building2, label: "Hotel" },
     { id: "villa", icon: Castle, label: "Villa" },
     { id: "apartment", icon: Building, label: "Apartment" },
-    { id: "camp", icon: Tent, label: "Camp House" },
+    { id: "camphouse", icon: Tent, label: "Camp" },
   ];
 
   const filteredDestinations =
     activeFilter === "all"
       ? destinations
-      : destinations.filter((dest) => dest.type === activeFilter);
+      : destinations.filter(
+          (dest) => dest.type.toLowerCase() === activeFilter.toLowerCase()
+        );
 
   if (loading) {
     return <div className="text-center py-8">Loading...</div>;
@@ -77,7 +80,7 @@ const Destinations = () => {
       </div>
 
       <div className="text-sm text-gray-600 mt-4 mb-6">
-        {destinations.length} total places found
+        {filteredDestinations.length} total places found
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
