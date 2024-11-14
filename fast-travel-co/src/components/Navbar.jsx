@@ -10,9 +10,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center p-4">
+    <div className="flex justify-between items-center p-4 px-8">
       {/* Logo */}
-      <div className="text-xl font-bold">fasttravelco.</div>
+      <a href="#"><div className="text-xl font-bold">fasttravelco.</div></a>
 
       {/* Buttons */}
       <div className="flex space-x-2">

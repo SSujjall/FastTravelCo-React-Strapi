@@ -1,4 +1,4 @@
-import { Button } from "../components/Button"; // import your Button component
+import { Button } from "./Button"; // import your Button component
 
 const SearchSection = () => {
   return (

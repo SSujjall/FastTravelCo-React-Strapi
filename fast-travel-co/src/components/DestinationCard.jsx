@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DestinationCard = ({ destination }) => {
   const navigate = useNavigate();
@@ -12,11 +12,11 @@ const DestinationCard = ({ destination }) => {
   };
 
   return (
-    <div 
+    <div
       onClick={() => navigate(`/destination/${destination.id}`)}
-      className="group relative cursor-pointer"
+      className="group relative cursor-pointer border rounded-lg shadow-lg"
     >
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-lg">
         {destination.images?.length > 0 ? (
           <img
             src={destination.images[activeImageIndex]}
@@ -29,15 +29,15 @@ const DestinationCard = ({ destination }) => {
           </div>
         )}
 
-        <button 
+        <button
           onClick={(e) => {
             e.stopPropagation();
             // Add favorite logic here
           }}
-          className="absolute top-3 right-3 p-2 rounded-full hover:bg-white/80"
+          className="absolute top-3 right-3 p-2 rounded-full bg-white hover:bg-white/80"
         >
           <svg
-            className="w-6 h-6 text-white"
+            className="w-4 h-4 text-black"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -66,7 +66,7 @@ const DestinationCard = ({ destination }) => {
         )}
       </div>
 
-      <div className="mt-3">
+      <div className="mt-3 p-3">
         <div className="flex justify-between">
           <h3 className="font-semibold">{destination.location}</h3>
           <div className="flex items-center gap-1">

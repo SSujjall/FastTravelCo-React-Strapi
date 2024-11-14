@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Home, Building2, Castle, Building, Tent } from "lucide-react";
-import { Button } from "../components/Button";
+import { Button } from "./Button";
 import { destinationService } from "../services/Api";
-import DestinationCard from "../components/DestinationCard";
+import DestinationCard from "./DestinationCard";
 
 const Destinations = () => {
   const [activeFilter, setActiveFilter] = useState("house");
@@ -48,7 +48,7 @@ const Destinations = () => {
   }
 
   return (
-    <div className="max-w-[1600px] mx-auto px-6">
+    <div className="max-w-[1600px] mx-auto px-8">
       <div className="flex justify-between border-b border-t">
         <div className="flex gap-8 py-4 overflow-x-auto">
           {filters.map(({ id, icon: Icon, label }) => (
@@ -66,7 +66,7 @@ const Destinations = () => {
           ))}
         </div>
 
-        <div className="min-w-[100px] max-w-[200px]">
+        <div className="min-w-[100px] max-w-[200px] flex items-center justify-center">
           <Button
             text="Filter"
             onClick={() => {}}
