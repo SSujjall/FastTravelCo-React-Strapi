@@ -46,7 +46,7 @@ const DestinationDetail = () => {
   return (
     <div className="max-w-[1800px] px-8 mx-auto">
       {/* Main Content */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 border">
         {/* Left Column - Main Image */}
         <div className="col-span-2">
           <div className="relative rounded-lg overflow-hidden">
@@ -76,12 +76,44 @@ const DestinationDetail = () => {
         </div>
       </div>
 
+      <div className="border flex justify-between mt-8">
+        <div className="w-2/3 border">
+          <h1 className="text-2xl font-bold">{destination.title}</h1>
+        </div>
+        <div className="flex lg:flex-row flex-col justify-end items-center gap-2 border w-1/3">
+          <a
+            href=""
+            className="flex items-center border px-2 py-1 gap-1 rounded-lg text-sm min-w-[126px]"
+          >
+            <span className="material-symbols-outlined text-base">map</span>
+            <span>View in map</span>
+          </a>
+
+          <a
+            href=""
+            className="flex items-center border px-2 py-1 gap-1 rounded-lg text-sm"
+          >
+            <span className="material-symbols-outlined text-base">
+              favorite
+            </span>
+            <span>Save</span>
+          </a>
+
+          <a
+            href=""
+            className="flex items-center border px-2 py-1 gap-1 rounded-lg text-sm"
+          >
+            <span className="material-symbols-outlined text-base">share</span>
+            <span>Share</span>
+          </a>
+        </div>
+      </div>
+
       {/* Property Details */}
-      <div className="grid grid-cols-3 gap-8 mt-8">
+      <div className="grid grid-cols-3 gap-8 border">
         <div className="col-span-2">
           <div className="flex justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold mb-2">{destination.title}</h1>
               <p className="flex gap-2">
                 <span className="material-symbols-outlined">location_on</span>
                 <p>{destination.location}</p>
@@ -92,22 +124,10 @@ const DestinationDetail = () => {
                 {destination.baths} bathrooms
               </p>
             </div>
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-row gap-4">
-                <button className="flex items-center gap-2">
-                  <Share2 size={20} />
-                  <span>Share</span>
-                </button>
-                <button className="flex items-center gap-2">
-                  <Heart size={20} />
-                  <span>Save</span>
-                </button>
-              </div>
 
-              <div className="w-100 flex justify-end items-center">
-                <span className="text-2xl font-bold">${destination.price}</span>
-                <span className="text-gray-600 text-sm">&nbsp;/night</span>
-              </div>
+            <div className="w-100 flex justify-end items-center">
+              <span className="text-2xl font-bold">${destination.price}</span>
+              <span className="text-gray-600 text-sm">&nbsp;/night</span>
             </div>
           </div>
 

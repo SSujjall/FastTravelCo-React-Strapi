@@ -6,7 +6,7 @@ export const destinationService = {
   async getDestinations(searchCriteria = {}) {
     try {
       const params = {
-        populate: ["Images", "reviews"], // Always populate images
+        populate: ["Images", "reviews", "amenities"], // Always populate images
       };
 
       // Set query parameters based on search criteria
