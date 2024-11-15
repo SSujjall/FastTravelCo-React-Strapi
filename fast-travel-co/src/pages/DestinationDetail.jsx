@@ -6,6 +6,7 @@ import ImageGallery from "../components/DestinationDetail/ImageGallery";
 import TitleAndButtons from "../components/DestinationDetail/TitleAndButtons";
 import AmenitiesList from "../components/DestinationDetail/AmenitiesList";
 import BookingForm from "../components/DestinationDetail/BookingForm";
+import Info from "../components/DestinationDetail/Info";
 
 const DestinationDetail = () => {
   const { id } = useParams();
@@ -104,26 +105,8 @@ const DestinationDetail = () => {
       {/* Property Details and Booking Card */}
       <div className="grid md:grid-cols-3 gap-8 border">
         <div className="col-span-2">
-          <div className="flex justify-between mb-6">
-            <div>
-              <p className="flex gap-2">
-                <span className="material-symbols-outlined">location_on</span>
-                {destination.location}
-              </p>
-
-              <p className="text-sm text-gray-500 mt-1">
-                {destination.guests} guests • {destination.beds} bedrooms •{" "}
-                {destination.baths} bathrooms
-              </p>
-            </div>
-
-            <div className="w-100 flex justify-end items-center">
-              <span className="text-2xl font-bold">${destination.price}</span>
-              <span className="text-gray-600 text-sm">&nbsp;/night</span>
-            </div>
-          </div>
-
-          <div className="text-sm">{destination.description}</div>
+          {/* Info Section */}
+          <Info destination={destination} />
 
           {/* Amenities Section */}
           <AmenitiesList amenities={destination.amenities} />
@@ -146,6 +129,27 @@ const DestinationDetail = () => {
           getInputBorderClass={getInputBorderClass}
         />
       </div>
+
+      {/* Reviews Section */}
+      {destination.reviews && destination.reviews.length > 0 && (
+        <div className="mt-8">
+          <h3 className="font-bold text-xl">Reviews</h3>
+          <ul>
+            {destination.reviews.map((review, index) => (
+              <li key={index} className="my-4">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">Rating: {review.Rating}</span>
+                  <span className="text-sm text-gray-500">
+                    by {review.user}
+                  </span>{" "}
+                  {/* Display the user */}
+                </div>
+                <p className="text-sm text-gray-500">{review.Comment}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

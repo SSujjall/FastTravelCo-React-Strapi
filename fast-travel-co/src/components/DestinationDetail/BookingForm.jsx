@@ -30,7 +30,9 @@ const BookingForm = ({
             <div className="grid grid-cols-1">
               <span className="text-base font-semibold">Check-in</span>
               <div
-                className={`border rounded-md p-3 ${getInputBorderClass("dates")}`}
+                className={`border rounded-md p-3 ${getInputBorderClass(
+                  "dates"
+                )}`}
               >
                 <input
                   type="date"
@@ -45,7 +47,9 @@ const BookingForm = ({
             <div className="grid grid-cols-1">
               <span className="text-base font-semibold">Check-out</span>
               <div
-                className={`border rounded-md p-3 ${getInputBorderClass("dates")}`}
+                className={`border rounded-md p-3 ${getInputBorderClass(
+                  "dates"
+                )}`}
               >
                 <input
                   type="date"
@@ -61,7 +65,9 @@ const BookingForm = ({
           <section className="grid grid-cols-1 mb-4">
             <span className="text-base font-semibold">No. of guests</span>
             <div
-              className={`border rounded-md p-3 ${getInputBorderClass("guests")}`}
+              className={`border rounded-md p-3 ${getInputBorderClass(
+                "guests"
+              )}`}
             >
               <select
                 value={guests}
@@ -69,13 +75,14 @@ const BookingForm = ({
                 className="w-full mt-1 outline-none"
                 required
               >
-                {Array.from({ length: destination.guests }, (_, i) => i + 1).map(
-                  (num) => (
-                    <option key={num} value={num}>
-                      {num} guests
-                    </option>
-                  )
-                )}
+                {Array.from(
+                  { length: destination.guests },
+                  (_, i) => i + 1
+                ).map((num) => (
+                  <option key={num} value={num}>
+                    {num} guests
+                  </option>
+                ))}
               </select>
             </div>
           </section>
@@ -111,7 +118,9 @@ const BookingForm = ({
           <section className="grid grid-cols-1 mb-4">
             <span className="text-base font-semibold">Note (optional)</span>
             <textarea
-              className={`border rounded-md p-3 outline-none ${getInputBorderClass("note")}`}
+              className={`border rounded-md p-3 outline-none ${getInputBorderClass(
+                "note"
+              )}`}
               rows={5}
               placeholder="Message Here"
               value={note}
