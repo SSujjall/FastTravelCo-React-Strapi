@@ -1,12 +1,15 @@
-import { Button } from "./Button"; // import Button component
+import { Button } from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  
   const handleLoginClick = () => {
-    console.log("Login clicked");
+    navigate("/login");
   };
 
   const handleRegisterClick = () => {
-    console.log("Register clicked");
+    navigate("/register");
   };
 
   return (

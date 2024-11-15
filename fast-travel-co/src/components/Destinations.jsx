@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Home, Building2, Castle, Building, Tent } from "lucide-react";
 import { Button } from "./Button";
-import { destinationService } from "../services/Api";
+import { getDestinations } from "../services/Api";
 import DestinationCard from "./DestinationCard";
 
 const Destinations = ({ searchCriteria }) => {
@@ -15,7 +15,7 @@ const Destinations = ({ searchCriteria }) => {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const data = await destinationService.getDestinations(searchCriteria);
+        const data = await getDestinations(searchCriteria);
         setDestinations(data);
         setLoading(false);
       } catch (err) {
