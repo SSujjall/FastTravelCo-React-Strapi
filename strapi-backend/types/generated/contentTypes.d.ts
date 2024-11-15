@@ -369,6 +369,34 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAmenityAmenity extends Struct.CollectionTypeSchema {
+  collectionName: 'amenities';
+  info: {
+    displayName: 'Amenity';
+    pluralName: 'amenities';
+    singularName: 'amenity';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::amenity.amenity'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
   collectionName: 'bookings';
   info: {
@@ -419,6 +447,7 @@ export interface ApiDestinationDestination extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    amenities: Schema.Attribute.Relation<'oneToMany', 'api::amenity.amenity'>;
     bookings: Schema.Attribute.Relation<'oneToMany', 'api::booking.booking'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1026,6 +1055,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::amenity.amenity': ApiAmenityAmenity;
       'api::booking.booking': ApiBookingBooking;
       'api::destination.destination': ApiDestinationDestination;
       'api::payment.payment': ApiPaymentPayment;

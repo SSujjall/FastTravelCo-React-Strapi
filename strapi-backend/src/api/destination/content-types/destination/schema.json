@@ -63,6 +63,11 @@
         "Apartment",
         "CampHouse"
       ]
+    },
+    "amenities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::amenity.amenity"
     }
   }
 }
