@@ -6,7 +6,12 @@ export const destinationService = {
   async getDestinations(searchCriteria = {}) {
     try {
       const params = {
-        populate: ["Images", "reviews", "amenities"], // Always populate images
+        populate: [
+          "Images",
+          "reviews",
+          "reviews.users_permissions_user",
+          "amenities",
+        ], // Populate user relation in reviews
       };
 
       // Set query parameters based on search criteria
@@ -49,6 +54,16 @@ export const destinationService = {
           guests: item.NumberOfGuests,
           rating: avgRating,
           images: item.Images?.map((image) => `${API_BASE_URL}${image.url}`),
+          amenities: item.amenities || [],
+          reviews: reviews.map((review) => {
+            const user = review.users_permissions_user
+              ? review.users_permissions_user.username
+              : "Anonymous"; // Get user if available
+            return {
+              ...review,
+              user,
+            };
+          }),
         };
       });
     } catch (error) {

@@ -5,6 +5,18 @@ import { Share2, Heart, Play } from "lucide-react";
 import { destinationService } from "../services/Api";
 import { Card } from "../components/Card";
 import { CardContent } from "../components/CardContent";
+import { Button } from "../components/Button";
+import {
+  AirVent,
+  Wifi,
+  CookingPot,
+  MonitorCheck,
+  Waves,
+  Dock,
+  HandPlatter,
+  BoomBox,
+  BaggageClaim,
+} from "lucide-react";
 
 const DestinationDetail = () => {
   const { id } = useParams();
@@ -43,12 +55,25 @@ const DestinationDetail = () => {
     return <div className="text-center py-8">Destination not found</div>;
   }
 
+  // Mapping amenities to icons -- Names must match with strapi's table attributes
+  const amenityIcons = {
+    "Air Conditioning": <AirVent className="text-gray-500" />,
+    "Fast Wifi": <Wifi className="text-gray-500" />,
+    "Equipped Kitchen": <CookingPot className="text-gray-500" />,
+    "Dedicated Workspace": <MonitorCheck className="text-gray-500" />,
+    "Hot Water": <Waves className="text-gray-500" />,
+    "Drying Rack": <Dock className="text-gray-500" />,
+    "Dining Table": <HandPlatter className="text-gray-500" />,
+    "Cleaning during stay": <BoomBox className="text-gray-500" />,
+    "Luggage Dropoff": <BaggageClaim className="text-gray-500" />,
+  };
+
   return (
     <div className="max-w-[1800px] px-8 mx-auto">
       {/* Main Content */}
-      <div className="grid grid-cols-3 gap-4 border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border">
         {/* Left Column - Main Image */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <div className="relative rounded-lg overflow-hidden">
             <img
               src={destination.images[activeImageIndex]}
@@ -59,7 +84,7 @@ const DestinationDetail = () => {
         </div>
 
         {/* Right Column - Thumbnail Grid */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 md:block">
           {destination.images.map((image, index) => (
             <div
               key={index}
@@ -76,6 +101,7 @@ const DestinationDetail = () => {
         </div>
       </div>
 
+      {/* Destination Title and Action Buttons */}
       <div className="border flex justify-between mt-8">
         <div className="w-2/3 border">
           <h1 className="text-2xl font-bold">{destination.title}</h1>
@@ -109,14 +135,14 @@ const DestinationDetail = () => {
         </div>
       </div>
 
-      {/* Property Details */}
-      <div className="grid grid-cols-3 gap-8 border">
+      {/* Property Details and Booking Card */}
+      <div className="grid md:grid-cols-3 gap-8 border mt-6">
         <div className="col-span-2">
           <div className="flex justify-between mb-6">
             <div>
               <p className="flex gap-2">
                 <span className="material-symbols-outlined">location_on</span>
-                <p>{destination.location}</p>
+                {destination.location}
               </p>
 
               <p className="text-sm text-gray-500 mt-1">
@@ -133,79 +159,130 @@ const DestinationDetail = () => {
 
           <div className="text-sm">{destination.description}</div>
 
-          <div className="border-t border-b py-6 mb-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="font-medium">Type:</span> {destination.type}
-              </div>
-              <div>
-                <span className="font-medium">Rating:</span>{" "}
-                {destination.rating.toFixed(1)} ★
-              </div>
-              <div>
-                <span className="font-medium">Guests:</span>{" "}
-                {destination.guests}
-              </div>
-              <div>
-                <span className="font-medium">Price:</span> ${destination.price}
-                /night
-              </div>
-              <div>
-                <span className="font-medium">Bedrooms:</span>{" "}
-                {destination.beds}
-              </div>
-              <div>
-                <span className="font-medium">Bathrooms:</span>{" "}
-                {destination.baths}
-              </div>
-            </div>
+          {/* Amenities Section */}
+          <div className="mt-6">
+            <h3 className="font-bold text-xl">Popular Amenities</h3>
+            <ul className="mt-3 grid grid-cols-2 gap-6 max-w-[600px]">
+              {destination.amenities && destination.amenities.length > 0 ? (
+                destination.amenities.map((amenity, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center text-sm text-gray-600"
+                  >
+                    {amenityIcons[amenity.Name] || null}
+                    <span className="ml-2">{amenity.Name}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="text-sm text-gray-500">
+                  No amenities available.
+                </li>
+              )}
+            </ul>
           </div>
         </div>
 
         {/* Booking Card */}
-        <div className="sticky top-4">
+        <div className="col-span-1 shadow-lg max-w-[450px] ml-auto">
           <Card>
             <CardContent>
-              <div className="flex justify-between items-center mb-6">
-                <span className="text-2xl font-bold">${destination.price}</span>
-                <span className="text-gray-600">/night</span>
-              </div>
+              <section className="flex justify-center items-center mb-6">
+                <span className="text-2xl font-bold">Book Now</span>
+              </section>
 
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="border rounded-md p-3">
-                  <div className="text-sm text-gray-600">Check-in</div>
-                  <div>{selectedDates.checkIn}</div>
+              <section className="grid xl:grid-cols-2 grid-cols-1 gap-4 mb-4">
+                <div className="grid grid-cols-1">
+                  <span className="text-base font-semibold">Check-in</span>
+                  <div className="border rounded-md p-3">
+                    <div>{selectedDates.checkIn}</div>
+                  </div>
                 </div>
-                <div className="border rounded-md p-3">
-                  <div className="text-sm text-gray-600">Check-out</div>
-                  <div>{selectedDates.checkOut}</div>
+
+                <div className="grid grid-cols-1">
+                  <span className="text-base font-semibold">Check-out</span>
+                  <div className="border rounded-md p-3">
+                    <div>{selectedDates.checkOut}</div>
+                  </div>
                 </div>
-              </div>
+              </section>
 
-              <div className="border rounded-md p-3 mb-4">
-                <div className="text-sm text-gray-600">Number of guests</div>
-                <select
-                  value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value))}
-                  className="w-full mt-1"
-                >
-                  {Array.from(
-                    { length: destination.guests },
-                    (_, i) => i + 1
-                  ).map((num) => (
-                    <option key={num} value={num}>
-                      {num} guests
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <section className="grid grid-cols-1 mb-4">
+                <span className="text-base font-semibold">No. of guests</span>
+                <div className="border rounded-md p-3">
+                  <select
+                    value={guests}
+                    onChange={(e) => setGuests(Number(e.target.value))}
+                    className="w-full mt-1 outline-none"
+                  >
+                    {Array.from(
+                      { length: destination.guests },
+                      (_, i) => i + 1
+                    ).map((num) => (
+                      <option key={num} value={num}>
+                        {num} guests
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </section>
 
-              <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
-                Reserve
-              </button>
+              <section className="grid grid-cols-1 mb-4">
+                <span className="text-base font-semibold">Phone Number</span>
+                <div className="flex items-center border rounded-md p-3">
+                  <select className="outline-none text-sm mr-3 p-2 w-2/4">
+                    <option value="+977">Nepal +977</option>
+                    <option value="+977">NewZealand +64</option>
+                    <option value="+44">UK +44</option>
+                    <option value="+91">India +91</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Phone number"
+                    className="w-3/4 p-2 outline-none"
+                  />
+                </div>
+              </section>
+
+              <section className="grid grid-cols-1 mb-4">
+                <span className="text-base font-semibold">Note (optional)</span>
+                <textarea
+                  className="border rounded-md p-3 outline-none"
+                  rows={5}
+                  placeholder="Message Here"
+                ></textarea>
+              </section>
+
+              <Button
+                text="Reserve"
+                icon=""
+                className="bg-black text-white py-2 px-4 rounded hover:bg-slate-600"
+              />
             </CardContent>
           </Card>
         </div>
+
+        {/* Reviews Section */}
+        {destination.reviews && destination.reviews.length > 0 && (
+          <div className="mt-8">
+            <h3 className="font-bold text-xl">Reviews</h3>
+            <ul>
+              {destination.reviews.map((review, index) => (
+                <li key={index} className="my-4">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold">
+                      Rating: {review.Rating}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      by {review.user}
+                    </span>{" "}
+                    {/* Display the user */}
+                  </div>
+                  <p className="text-sm text-gray-500">{review.Comment}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
