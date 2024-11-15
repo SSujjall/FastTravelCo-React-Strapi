@@ -20,63 +20,65 @@ const SearchSection = ({ setSearchCriteria }) => {
 
   return (
     <div className="px-4 py-6">
-      <h2 className="text-4xl font-bold text-center mb-8">
+      <h2 className="text-4xl font-bold text-center mb-4">
         Your Next Destination Awaits
       </h2>
       <div className="max-w-7xl mx-auto p-3 bg-white border border-slate-100 shadow-lg rounded-lg">
-        <div className="flex justify-between items-center font-semibold">
-          {/* Section 1 */}
-          <div className="flex items-center space-x-2">
-            <span className="material-icons">location_on</span>
+        <div className="flex flex-row lg:flex-row justify-between items-stretch lg:items-center font-semibold gap-4 lg:gap-2">
+          {/* Location Section */}
+          <div className="flex items-center space-x-2 flex-1">
+            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">location_on</span>
             <input
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter location"
-              className="border rounded p-2"
+              className="border rounded p-2 w-full outline-none"
             />
           </div>
 
-          <div className="hidden sm:block mx-4 h-16 border-l border-gray-400"></div>
+          <div className="hidden lg:block mx-4 h-16 border-l border-gray-200" />
 
-          {/* Section 2 (Hidden on mobile) */}
-          <div className="hidden sm:flex items-center space-x-2">
-            <span className="material-icons">calendar_today</span>
-            <input
-              type="date"
-              value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
-              className="border rounded p-2"
-            />
-            <input
-              type="date"
-              value={checkOut}
-              onChange={(e) => setCheckOut(e.target.value)}
-              className="border rounded p-2"
-            />
+          {/* Dates Section */}
+          <div className="hidden md:flex items-center space-x-2 flex-1">
+            <span className="material-icons p-2 bg-gray-200 rounded-full">calendar_today</span>
+            <div className="flex flex-1 gap-2">
+              <input
+                type="date"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                className="border rounded p-2 w-full outline-none"
+              />
+              <input
+                type="date"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="border rounded p-2 w-full outline-none"
+              />
+            </div>
           </div>
 
-          <div className="hidden sm:block mx-4 h-16 border-l border-gray-400"></div>
+          <div className="hidden lg:block mx-4 h-16 border-l border-gray-200" />
 
-          {/* Section 3 (Hidden on mobile) */}
-          <div className="hidden sm:flex items-center space-x-2">
-            <span className="material-icons">people</span>
+          {/* Guests Section */}
+          <div className="hidden md:flex items-center space-x-2 flex-1">
+            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">person</span>
             <input
               type="number"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
               placeholder="Guests"
-              className="border rounded p-2"
+              className="border rounded p-2 w-full outline-none"
             />
           </div>
 
           {/* Search Button */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center">
             <Button
               text="Search"
               onClick={handleSearch}
               icon="search"
-              className="bg-black text-white hover:bg-slate-600 w-auto min-w-[120px]"
+              className="bg-black text-white hover:bg-slate-600 w-full lg:w-auto min-w-[120px]"
             />
           </div>
         </div>

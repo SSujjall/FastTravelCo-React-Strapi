@@ -62,6 +62,7 @@ const InfoSection = () => {
                 src={destinations[0].image}
                 alt="Thailand cityscape"
                 className="w-full lg:h-[600px] h-[400px] object-cover"
+                loading="lazy"
               />
               <div className="absolute top-4 left-4">
                 <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
@@ -76,6 +77,7 @@ const InfoSection = () => {
                 src={destinations[1].image}
                 alt="Norway fjord"
                 className="w-full lg:h-[600px] h-[400px] object-cover"
+                loading="lazy"
               />
               <div className="absolute top-4 left-4">
                 <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
@@ -91,6 +93,7 @@ const InfoSection = () => {
                   src={destinations[2].image}
                   alt="Nepal mountains"
                   className="w-full h-[190px] lg:h-[290px] object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
@@ -104,6 +107,7 @@ const InfoSection = () => {
                   src={destinations[3].image}
                   alt="Singapore night"
                   className="w-full h-[190px] lg:h-[290px] object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
@@ -135,6 +139,7 @@ const InfoSection = () => {
                     src={testimonial.profilePicture} // Assuming you have a profile picture URL in the testimonial data
                     alt={testimonial.author}
                     className="w-12 h-12 rounded-full object-cover mr-4"
+                    loading="lazy"
                   />
                   <p className="font-medium">{testimonial.author}</p>
                 </div>
@@ -168,6 +173,7 @@ const InfoSection = () => {
                   src={landmark.image}
                   alt={landmark.name}
                   className="w-full h-[500px] object-cover transition-transform duration-300 group-hover:scale-110"
+                  loading="lazy"
                 />
               </div>
             ))}

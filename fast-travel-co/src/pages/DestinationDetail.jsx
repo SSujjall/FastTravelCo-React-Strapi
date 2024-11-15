@@ -1,12 +1,21 @@
-import { useState, useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Share2, Heart, Play } from "lucide-react";
 import { destinationService } from "../services/Api";
+import { Card } from "../components/Card";
+import { CardContent } from "../components/CardContent";
 
 const DestinationDetail = () => {
   const { id } = useParams();
   const [destination, setDestination] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedDates, setSelectedDates] = useState({
+    checkIn: "12th January, 2024",
+    checkOut: "17th February, 2024",
+  });
+  const [guests, setGuests] = useState(2);
 
   useEffect(() => {
     const fetchDestination = async () => {
@@ -35,56 +44,91 @@ const DestinationDetail = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Image Gallery */}
-        <div className="space-y-4">
-          <div className="aspect-[4/3] overflow-hidden rounded-lg">
+    <div className="max-w-[1800px] px-8 mx-auto">
+      {/* Main Content */}
+      <div className="grid grid-cols-3 gap-4">
+        {/* Left Column - Main Image */}
+        <div className="col-span-2">
+          <div className="relative rounded-lg overflow-hidden">
             <img
               src={destination.images[activeImageIndex]}
               alt={destination.location}
-              className="w-full h-full object-cover"
+              className="w-full h-[500px] object-cover"
             />
-          </div>
-          <div className="grid grid-cols-4 gap-2">
-            {destination.images.map((image, index) => (
-              <div
-                key={index}
-                onClick={() => setActiveImageIndex(index)}
-                className={`aspect-[4/3] overflow-hidden rounded-lg cursor-pointer ${
-                  index === activeImageIndex ? "ring-2 ring-black" : ""
-                }`}
-              >
-                <img
-                  src={image}
-                  alt={`${destination.location} ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
           </div>
         </div>
 
-        {/* Details */}
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold">{destination.location}</h1>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="flex items-center">
-                <span>★</span>
-                <span className="ml-1">{destination.rating}</span>
-              </span>
-              <span className="text-gray-600">·</span>
-              <span className="text-gray-600">{destination.type}</span>
+        {/* Right Column - Thumbnail Grid */}
+        <div className="grid grid-cols-2 gap-2">
+          {destination.images.map((image, index) => (
+            <div
+              key={index}
+              className="rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => setActiveImageIndex(index)}
+            >
+              <img
+                src={image}
+                alt={`${destination.location} ${index + 1}`}
+                className="w-full h-[150px] object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Property Details */}
+      <div className="grid grid-cols-3 gap-8 mt-8">
+        <div className="col-span-2">
+          <div className="flex justify-between mb-6">
+            <div>
+              <h1 className="text-2xl font-bold mb-2">{destination.title}</h1>
+              <p className="flex gap-2">
+                <span className="material-symbols-outlined">location_on</span>
+                <p>{destination.location}</p>
+              </p>
+
+              <p className="text-sm text-gray-500 mt-1">
+                {destination.guests} guests • {destination.beds} bedrooms •{" "}
+                {destination.baths} bathrooms
+              </p>
+            </div>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-row gap-4">
+                <button className="flex items-center gap-2">
+                  <Share2 size={20} />
+                  <span>Share</span>
+                </button>
+                <button className="flex items-center gap-2">
+                  <Heart size={20} />
+                  <span>Save</span>
+                </button>
+              </div>
+
+              <div className="w-100 flex justify-end items-center">
+                <span className="text-2xl font-bold">${destination.price}</span>
+                <span className="text-gray-600 text-sm">&nbsp;/night</span>
+              </div>
             </div>
           </div>
 
-          <div className="border-t pt-6">
-            <h2 className="text-xl font-semibold mb-4">Property Details</h2>
+          <div className="text-sm">{destination.description}</div>
+
+          <div className="border-t border-b py-6 mb-6">
             <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="font-medium">Type:</span> {destination.type}
+              </div>
+              <div>
+                <span className="font-medium">Rating:</span>{" "}
+                {destination.rating.toFixed(1)} ★
+              </div>
               <div>
                 <span className="font-medium">Guests:</span>{" "}
                 {destination.guests}
+              </div>
+              <div>
+                <span className="font-medium">Price:</span> ${destination.price}
+                /night
               </div>
               <div>
                 <span className="font-medium">Bedrooms:</span>{" "}
@@ -94,16 +138,53 @@ const DestinationDetail = () => {
                 <span className="font-medium">Bathrooms:</span>{" "}
                 {destination.baths}
               </div>
-              <div>
-                <span className="font-medium">Price:</span> ${destination.price}
-                /night
-              </div>
             </div>
           </div>
+        </div>
 
-          <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
-            Book Now
-          </button>
+        {/* Booking Card */}
+        <div className="sticky top-4">
+          <Card>
+            <CardContent>
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-2xl font-bold">${destination.price}</span>
+                <span className="text-gray-600">/night</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="border rounded-md p-3">
+                  <div className="text-sm text-gray-600">Check-in</div>
+                  <div>{selectedDates.checkIn}</div>
+                </div>
+                <div className="border rounded-md p-3">
+                  <div className="text-sm text-gray-600">Check-out</div>
+                  <div>{selectedDates.checkOut}</div>
+                </div>
+              </div>
+
+              <div className="border rounded-md p-3 mb-4">
+                <div className="text-sm text-gray-600">Number of guests</div>
+                <select
+                  value={guests}
+                  onChange={(e) => setGuests(Number(e.target.value))}
+                  className="w-full mt-1"
+                >
+                  {Array.from(
+                    { length: destination.guests },
+                    (_, i) => i + 1
+                  ).map((num) => (
+                    <option key={num} value={num}>
+                      {num} guests
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                Reserve
+              </button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

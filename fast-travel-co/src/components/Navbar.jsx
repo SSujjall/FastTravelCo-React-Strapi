@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center p-4 px-8">
       {/* Logo */}
-      <a href="#"><div className="text-xl font-bold">fasttravelco.</div></a>
+      <a href="/"><div className="text-xl font-bold">fasttravelco.</div></a>
 
       {/* Buttons */}
       <div className="flex space-x-2">

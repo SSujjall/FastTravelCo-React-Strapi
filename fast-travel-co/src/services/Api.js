@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:1337";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const destinationService = {
   async getDestinations(searchCriteria = {}) {
     try {
       const params = {
-        populate: "Images", // Always populate images
+        populate: ["Images", "reviews"], // Always populate images
       };
 
       // Set query parameters based on search criteria
@@ -29,18 +29,28 @@ export const destinationService = {
         params,
       });
 
-      // Map response data
-      return response.data.data.map((item) => ({
-        id: item.id,
-        type: item.Type.toLowerCase(),
-        location: item.Location,
-        price: parseInt(item.PricePerNight),
-        beds: item.NumberOfBedrooms,
-        baths: item.NumberOfBathrooms,
-        guests: item.NumberOfGuests,
-        rating: 4.5,
-        images: item.Images?.map((image) => `${API_BASE_URL}${image.url}`),
-      }));
+      return response.data.data.map((item) => {
+        const reviews = item.reviews || [];
+        const avgRating =
+          reviews.length > 0
+            ? reviews.reduce((acc, review) => acc + review.Rating, 0) /
+              reviews.length
+            : 0; // 0 is default reviews
+
+        return {
+          id: item.id,
+          type: item.Type.toLowerCase(),
+          location: item.Location,
+          description: item.Description,
+          title: item.Title,
+          price: parseInt(item.PricePerNight),
+          beds: item.NumberOfBedrooms,
+          baths: item.NumberOfBathrooms,
+          guests: item.NumberOfGuests,
+          rating: avgRating,
+          images: item.Images?.map((image) => `${API_BASE_URL}${image.url}`),
+        };
+      });
     } catch (error) {
       console.error("Error fetching destinations:", error);
       throw error;

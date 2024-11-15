@@ -4,10 +4,12 @@ import Index from "./pages/Index";
 import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import DestinationDetail from "./pages/DestinationDetail";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/destination/:id" element={<DestinationDetail />} />
