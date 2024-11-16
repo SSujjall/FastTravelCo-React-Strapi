@@ -56,7 +56,7 @@ const Navbar = () => {
         ) : (
           <>
             <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 p-4 flex items-center justify-center rounded-full bg-gray-500 text-white">
+              <div onClick={() => navigate("/myBookings")} className="w-8 h-8 p-4 flex items-center justify-center rounded-full bg-gray-500 text-white">
                 {getInitials(username)}
               </div>
               <Button

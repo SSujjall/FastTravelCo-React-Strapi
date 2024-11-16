@@ -9,6 +9,7 @@ import Login from "./pages/Auth/login";
 import Signup from "./pages/Auth/signup";
 import PrivateRoute from "./pages/PrivateRoute";
 import Payment from "./pages/Payment";
+import MyBookings from "./pages/MyBookings";
 import Toast from "./components/Toast";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
+        <Route path="/myBookings" element={<MyBookings />} />
 
         <Route
           path="/payment"

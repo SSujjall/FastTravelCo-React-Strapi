@@ -99,7 +99,7 @@ const Payment = () => {
 
       toast.success("Payment successful! Your booking has been confirmed.");
 
-      navigate("/booking-confirmation", {
+      navigate("/myBookings", {
         state: {
           ...reservationData,
           paymentMethod,

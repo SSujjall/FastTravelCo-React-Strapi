@@ -244,3 +244,46 @@ export const createPaymentAndBooking = async (paymentData, jwt) => {
     throw error;
   }
 };
+
+// Get specific user bookings
+export const getBookingsByUser = async (token, userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/bookings`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        // Populate destination relation to get the title and other details
+        "populate": ["destination", "payment"], // Assuming 'destination' is the relation name in the booking model
+        "filters[users_permissions_user][id][$eq]": userId, // Filter bookings by the user ID
+      },
+    });
+
+    // Return the data with payment and destination details
+    return response.data.data.map((booking) => ({
+      id: booking.documentId,
+      destinationTitle: booking.destination?.Title, // Accessing destination title
+      checkIn: booking.CheckInDate,
+      checkOut: booking.CheckOutDate,
+      status: booking.Status,
+      amount: booking.payment?.Amount, // Amount from related payment
+      paymentMethod: booking.payment?.PaymentMethod, // Payment method from related payment
+    }));
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    throw error;
+  }
+};
+
+export const deleteBooking = async (token, bookingId) => {
+  try {
+    await axios.delete(`${API_BASE_URL}/api/bookings/${bookingId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    throw error;
+  }
+};
