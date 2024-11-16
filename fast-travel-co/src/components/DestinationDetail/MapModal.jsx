@@ -68,30 +68,30 @@ const MapModal = ({ isOpen, onClose, location }) => {
     <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
       <div className="relative bg-white w-[800px] h-[600px] rounded-lg flex flex-col">
         {/* Header with close button */}
-        <div className="absolute top-0 right-0 left-0 h-12 flex justify-end items-center px-4 z-20">
+        <div className="absolute top-0 right-0 left-0 h-12 mt-2 flex justify-end items-center px-4 z-30">
           <button
             onClick={onClose}
-            className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-100"
+            className="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg hover:bg-gray-100"
           >
-            <span className="material-symbols-outlined">close</span>
+            <span className="material-symbols-outlined text-lg">close</span>
           </button>
         </div>
 
         {/* Map container */}
-        <div className="relative flex-1 w-full">
+        <div className="relative flex-1 w-full h-full">
           {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-white rounded-lg z-10">
+            <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-20">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
             </div>
           )}
 
           {error && (
-            <div className="absolute inset-0 flex items-center justify-center bg-white rounded-lg z-10">
+            <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-20">
               <p className="text-red-500">{error}</p>
             </div>
           )}
 
-          <div id="map" className="absolute inset-0 rounded-lg"></div>
+          <div id="map" className="absolute inset-0 rounded-lg z-10"></div>
         </div>
       </div>
     </div>

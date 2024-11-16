@@ -1,0 +1,11 @@
+/* Cross out unavailable dates */
+.unavailable-date {
+    background-color: #ffdddd;  /* Light red background for unavailable dates */
+    color: #ff0000;              /* Red text color */
+    text-decoration: line-through; /* Cross out text */
+  }
+  
+  /* Optional: Change the cursor to indicate unavailability */
+  .react-datepicker__day--unavailable {
+    cursor: not-allowed;
+  }

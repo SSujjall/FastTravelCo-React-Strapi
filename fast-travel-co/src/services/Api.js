@@ -254,7 +254,7 @@ export const getBookingsByUser = async (token, userId) => {
       },
       params: {
         // Populate destination relation to get the title and other details
-        "populate": ["destination", "payment"], // Assuming 'destination' is the relation name in the booking model
+        populate: ["destination", "payment"], // Assuming 'destination' is the relation name in the booking model
         "filters[users_permissions_user][id][$eq]": userId, // Filter bookings by the user ID
       },
     });
@@ -284,6 +284,32 @@ export const deleteBooking = async (token, bookingId) => {
     });
   } catch (error) {
     console.error("Error deleting booking:", error);
+    throw error;
+  }
+};
+
+// Get bookings for a specific destination
+export const getUnavailableDatesForDestination = async (destinationDocumentId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/bookings`, {
+      params: {
+        "populate[destination]": true, // Populate destination relation
+        "filters[destination][documentId][$eq]": destinationDocumentId, // Filter by destination documentId
+      },
+    });
+
+    const bookings = response.data.data;
+
+    // Extract the check-in and check-out dates for the bookings
+    const unavailableDates = bookings.map((booking) => {
+      const checkInDate = new Date(booking.CheckInDate);
+      const checkOutDate = new Date(booking.CheckOutDate);
+      return { checkInDate, checkOutDate };
+    });
+
+    return unavailableDates;
+  } catch (error) {
+    console.error("Error fetching bookings for destination:", error);
     throw error;
   }
 };

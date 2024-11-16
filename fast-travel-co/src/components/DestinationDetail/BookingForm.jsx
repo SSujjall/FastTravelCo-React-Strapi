@@ -19,7 +19,7 @@ const BookingForm = ({
   getInputBorderClass,
 }) => {
   return (
-    <div className="col-span-1 shadow-lg max-w-[450px] ml-auto">
+    <div className="col-span-1 max-w-[450px] ml-auto">
       <Card>
         <CardContent>
           <section className="flex justify-center items-center mb-6">

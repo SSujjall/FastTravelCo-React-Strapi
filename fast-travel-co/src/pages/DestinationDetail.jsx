@@ -1,4 +1,3 @@
-// DestinationDetail.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDestinations } from "../services/Api";
@@ -8,6 +7,8 @@ import AmenitiesList from "../components/DestinationDetail/AmenitiesList";
 import BookingForm from "../components/DestinationDetail/BookingForm";
 import Info from "../components/DestinationDetail/Info";
 import Reviews from "../components/DestinationDetail/Reviews";
+import { getUnavailableDatesForDestination } from "../services/Api";
+import Calendar from "../components/DestinationDetail/Calendar";
 
 const DestinationDetail = () => {
   const { documentId } = useParams();
@@ -19,6 +20,7 @@ const DestinationDetail = () => {
     checkIn: "",
     checkOut: "",
   });
+  const [unavailableDates, setUnavailableDates] = useState([]);
   const [guests, setGuests] = useState(2);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedCountryCode, setSelectedCountryCode] = useState("+977");
@@ -42,6 +44,22 @@ const DestinationDetail = () => {
 
     fetchDestination();
   }, [documentId]);
+
+  // Fetch unavailable dates when destination is fetched
+  useEffect(() => {
+    const fetchUnavailableDates = async () => {
+      try {
+        const dates = await getUnavailableDatesForDestination(documentId);
+        setUnavailableDates(dates);
+      } catch (error) {
+        console.error("Error fetching unavailable dates:", error);
+      }
+    };
+
+    if (destination) {
+      fetchUnavailableDates();
+    }
+  }, [documentId, destination]);
 
   const handleReserve = () => {
     let formErrors = {};
@@ -134,6 +152,9 @@ const DestinationDetail = () => {
         <div className="col-span-2">
           <Info destination={destination} />
           <AmenitiesList amenities={destination.amenities} />
+
+          <h3 className="text-xl font-semibold">Available Date</h3>
+          <Calendar unavailableDates={unavailableDates} />
         </div>
 
         <BookingForm
