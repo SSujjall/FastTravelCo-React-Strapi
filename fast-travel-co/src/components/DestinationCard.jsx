@@ -6,10 +6,28 @@ import StarRating from "./StarRating"; // Adjust the path as per your folder str
 const DestinationCard = ({ destination }) => {
   const navigate = useNavigate();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isLiked, setIsLiked] = useState(() => {
+    // Get the saved like status from sessionStorage or default to false
+    const savedState = sessionStorage.getItem(
+      `liked-${destination.documentId}`
+    );
+    return savedState ? JSON.parse(savedState) : false;
+  });
 
   const handleDotClick = (e, index) => {
     e.stopPropagation();
     setActiveImageIndex(index);
+  };
+
+  const handleHeartClick = (e) => {
+    e.stopPropagation();
+    const newState = !isLiked;
+    setIsLiked(newState);
+    // Save the like state to sessionStorage
+    sessionStorage.setItem(
+      `liked-${destination.documentId}`,
+      JSON.stringify(newState)
+    );
   };
 
   return (
@@ -31,14 +49,11 @@ const DestinationCard = ({ destination }) => {
         )}
 
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            // Add favorite logic here
-          }}
+          onClick={handleHeartClick} // Handle heart icon click
           className="absolute top-3 right-3 p-2 rounded-full bg-white hover:bg-white/80"
         >
           <svg
-            className="w-4 h-4 text-black"
+            className={`w-6 h-6 ${isLiked ? "text-red-500" : "text-black"}`} // Change color based on liked state
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

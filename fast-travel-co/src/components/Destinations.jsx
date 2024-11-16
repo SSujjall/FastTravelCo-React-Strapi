@@ -7,7 +7,7 @@ import { getDestinations } from "../services/Api";
 import DestinationCard from "./DestinationCard";
 
 const Destinations = ({ searchCriteria }) => {
-  const [activeFilter, setActiveFilter] = useState("house");
+  const [activeFilter, setActiveFilter] = useState("all"); // 'all' for no type filter
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,6 +28,7 @@ const Destinations = ({ searchCriteria }) => {
   }, [searchCriteria]);
 
   const filters = [
+    { id: "all", icon: Home, label: "All" },
     { id: "house", icon: Home, label: "House" },
     { id: "hotel", icon: Building2, label: "Hotel" },
     { id: "villa", icon: Castle, label: "Villa" },
@@ -58,10 +59,12 @@ const Destinations = ({ searchCriteria }) => {
             <button
               key={id}
               onClick={() => setActiveFilter(id)}
-              className="relative flex items-center gap-2 px-1 py-2"
+              className={`relative flex items-center gap-2 px-1 py-2 ${
+                activeFilter === id ? "font-bold text-black" : "text-gray-700"
+              }`}
             >
-              <Icon className="w-5 h-5 text-gray-700" />
-              <span className="text-sm text-gray-700">{label}</span>
+              <Icon className="w-5 h-5" />
+              <span className="text-sm">{label}</span>
               {activeFilter === id && (
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black" />
               )}

@@ -50,30 +50,48 @@ export const getDestinations = async (searchCriteria = {}) => {
         "reviews",
         "reviews.users_permissions_user",
         "amenities",
+        "bookings", // Include bookings for availability checks
       ],
     };
 
-    // Apply search criteria as query filters
+    // Add search criteria as query filters
     if (searchCriteria.location) {
       params["filters[Location][$contains]"] = searchCriteria.location;
     }
     if (searchCriteria.guests) {
       params["filters[NumberOfGuests][$gte]"] = searchCriteria.guests;
     }
-    if (searchCriteria.checkIn) {
-      params["filters[check_in][$lte]"] = searchCriteria.checkIn;
-    }
-    if (searchCriteria.checkOut) {
-      params["filters[check_out][$gte]"] = searchCriteria.checkOut;
-    }
 
-    // API call
+    // Fetch destinations
     const response = await axios.get(`${API_BASE_URL}/api/destinations`, {
       params,
     });
 
+    const destinations = response.data.data;
+
+    // If dates are provided, exclude destinations with overlapping bookings
+    let availableDestinations = destinations;
+    if (searchCriteria.checkIn && searchCriteria.checkOut) {
+      const searchCheckIn = new Date(searchCriteria.checkIn);
+      const searchCheckOut = new Date(searchCriteria.checkOut);
+
+      availableDestinations = destinations.filter((destination) => {
+        const bookings = destination.bookings || [];
+        const hasOverlap = bookings.some((booking) => {
+          const bookingCheckIn = new Date(booking.CheckInDate);
+          const bookingCheckOut = new Date(booking.CheckOutDate);
+          return (
+            searchCheckIn <= bookingCheckOut && searchCheckOut >= bookingCheckIn
+          );
+        });
+
+        // Exclude destinations with overlapping bookings
+        return !hasOverlap;
+      });
+    }
+
     // Transform response data
-    return response.data.data.map((item) => {
+    return availableDestinations.map((item) => {
       const reviews = item.reviews || [];
       const avgRating =
         reviews.length > 0
@@ -95,15 +113,11 @@ export const getDestinations = async (searchCriteria = {}) => {
         rating: avgRating,
         images: item.Images?.map((image) => `${API_BASE_URL}${image.url}`),
         amenities: item.amenities || [],
-        reviews: reviews.map((review) => {
-          const user = review.users_permissions_user
-            ? review.users_permissions_user.username
-            : "Anonymous";
-          return {
-            ...review,
-            user,
-          };
-        }),
+        bookings: item.bookings || [],
+        reviews: reviews.map((review) => ({
+          ...review,
+          user: review.users_permissions_user?.username || "Anonymous",
+        })),
       };
     });
   } catch (error) {
@@ -289,7 +303,9 @@ export const deleteBooking = async (token, bookingId) => {
 };
 
 // Get bookings for a specific destination
-export const getUnavailableDatesForDestination = async (destinationDocumentId) => {
+export const getUnavailableDatesForDestination = async (
+  destinationDocumentId
+) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/api/bookings`, {
       params: {
