@@ -83,6 +83,7 @@ export const getDestinations = async (searchCriteria = {}) => {
 
       return {
         id: item.id,
+        documentId: item.documentId,
         type: item.Type.toLowerCase(),
         location: item.Location,
         description: item.Description,
@@ -110,6 +111,136 @@ export const getDestinations = async (searchCriteria = {}) => {
       "Error fetching destinations:",
       error.response?.data || error.message
     );
+    throw error;
+  }
+};
+
+/// Fetch logged-in user's details
+export const getUserDetails = async (jwt) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/users/me`, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+
+    return response.data; // Returns the user details
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    throw error;
+  }
+};
+
+// Submit review function with authentication token
+export const submitReview = async (destinationId, reviewText, rating, jwt) => {
+  try {
+    const user = await getUserDetails(jwt); // Get the current user's details
+    const response = await axios.post(
+      `${API_BASE_URL}/api/reviews`,
+      {
+        data: {
+          Comment: reviewText,
+          Rating: rating,
+          destination: destinationId,
+          users_permissions_user: user.id, // Associate review with the logged-in user
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+    return response.data; // Returns the created review data
+  } catch (error) {
+    console.error("Error submitting review:", error);
+    throw error;
+  }
+};
+
+export const deleteReview = async (reviewId, jwt) => {
+  try {
+    const response = await axios.delete(
+      `${API_BASE_URL}/api/reviews/${reviewId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    throw error;
+  }
+};
+
+// Create payment and booking
+export const createPaymentAndBooking = async (paymentData, jwt) => {
+  try {
+    // Creating a payment entry first
+    const paymentResponse = await axios.post(
+      `${API_BASE_URL}/api/payments`,
+      {
+        data: {
+          Amount: paymentData.amount,
+          PaymentMethod: paymentData.paymentMethod,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    console.log("Payment created:", paymentResponse.data.data.documentId);
+
+    // Crete a booking entry right after payment
+    const bookingResponse = await axios.post(
+      `${API_BASE_URL}/api/bookings`,
+      {
+        data: {
+          CheckInDate: paymentData.checkIn,
+          CheckOutDate: paymentData.checkOut,
+          NumberOfGuests: paymentData.guests,
+          Note: paymentData.note,
+          destination: paymentData.destinationDocumentId, // Pass the documentId here
+          payment: paymentResponse.data.data.id,
+          users_permissions_user: paymentData.userId,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    console.log("Booking Created: ", bookingResponse.data.data.documentId);
+
+    // In booking, update the payment field
+    // booking documentId is used in the url to get the specific booking
+    await axios.put(
+      `${API_BASE_URL}/api/bookings/${bookingResponse.data.data.documentId}`,
+      {
+        data: {
+          payment: paymentResponse.data.data.id,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
+    return {
+      payment: paymentResponse.data,
+      booking: bookingResponse.data,
+    };
+  } catch (error) {
+    console.error("Error creating payment and booking:", error);
     throw error;
   }
 };

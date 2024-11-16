@@ -16,7 +16,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/destination/:id" element={<DestinationDetail />} />
+        <Route
+          path="/destination/:documentId"
+          element={<DestinationDetail />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
 

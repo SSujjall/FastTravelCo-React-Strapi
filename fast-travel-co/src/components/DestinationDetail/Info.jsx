@@ -4,10 +4,10 @@ const Info = ({ destination }) => {
     <div className="info-container">
       <div className="flex justify-between mb-6">
         <div className="upper-item">
-          <p className="flex gap-2">
+          <div className="flex gap-2">
             <span className="material-symbols-outlined">location_on</span>
-            {destination.location}
-          </p>
+            <span className="font-bold">{destination.location}</span>
+          </div>
 
           <p className="text-sm text-gray-500 mt-1">
             {destination.guests} guests • {destination.beds} bedrooms •{" "}
@@ -16,8 +16,9 @@ const Info = ({ destination }) => {
         </div>
 
         <div className="w-100 flex justify-end items-center">
+          <span className="text-sm text-gray-600">from&nbsp;</span>
           <span className="text-2xl font-bold">${destination.price}</span>
-          <span className="text-gray-600 text-sm">&nbsp;/night</span>
+          <span className="text-gray-800 text-sm">&nbsp;/night</span>
         </div>
       </div>
 

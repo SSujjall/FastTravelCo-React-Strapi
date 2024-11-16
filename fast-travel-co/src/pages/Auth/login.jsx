@@ -14,36 +14,37 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Reset previous errors
     setFormErrors({});
-
+  
     let errors = {};
-
+  
     // Validation for identifier (email/username)
     if (!identifier) {
       errors.identifier = "Email is required.";
     }
-
+  
     // Validation for password
     if (!password) {
       errors.password = "Password is required.";
     }
-
+  
     // If there are any validation errors, set them and return
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
-
+  
     try {
-      const { jwt } = await login(identifier, password);
-      authService.login(jwt); // Save token
+      const { jwt, user } = await login(identifier, password);
+      authService.login(jwt, user.username); // Save token and username
       navigate("/"); // Redirect to home
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }
   };
+  
 
   const getInputBorderClass = (field) => {
     return formErrors[field] ? "border-red-500" : "border-gray-300";

@@ -8,11 +8,17 @@ export const authService = {
     return localStorage.getItem("jwt");
   },
 
-  login(jwt) {
+  getUsername() {
+    return localStorage.getItem("username");
+  },
+
+  login(jwt, username) {
     localStorage.setItem("jwt", jwt);
+    localStorage.setItem("username", username);
   },
 
   logout() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("username");
   },
 };

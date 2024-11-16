@@ -414,9 +414,6 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    CurrentStatus: Schema.Attribute.Enumeration<
-      ['Pending,', 'Confirmed,', 'Cancelled']
-    >;
     destination: Schema.Attribute.Relation<
       'manyToOne',
       'api::destination.destination'
@@ -427,6 +424,7 @@ export interface ApiBookingBooking extends Struct.CollectionTypeSchema {
       'api::booking.booking'
     > &
       Schema.Attribute.Private;
+    Note: Schema.Attribute.Text;
     NumberOfGuests: Schema.Attribute.Integer;
     payment: Schema.Attribute.Relation<'oneToOne', 'api::payment.payment'>;
     publishedAt: Schema.Attribute.DateTime;
@@ -505,7 +503,7 @@ export interface ApiPaymentPayment extends Struct.CollectionTypeSchema {
       'api::payment.payment'
     > &
       Schema.Attribute.Private;
-    PaymentMethod: Schema.Attribute.Enumeration<['COD,', 'Online']>;
+    PaymentMethod: Schema.Attribute.Enumeration<['COD', 'Online']>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

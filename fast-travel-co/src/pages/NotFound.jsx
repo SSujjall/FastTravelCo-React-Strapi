@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 
 const NotFound = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const goToHome = () => {
-      navigate("/");
-    }
+  const goToHome = () => {
+    navigate("/");
+  };
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center">
       <h1 className="text-8xl font-bold mb-4">404</h1>
@@ -14,7 +14,11 @@ const NotFound = () => {
         Oops! The page you&apos;re looking for doesn&apos;t exist.
       </p>
 
-      <Button className={"max-w-40"} onClick={goToHome} text="Go Home"></Button>
+      <Button
+        className={"max-w-40 text-white bg-black hover:bg-gray-700"}
+        onClick={goToHome}
+        text="Go Home"
+      ></Button>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+// DestinationDetail.jsx
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDestinations } from "../services/Api";
 import ImageGallery from "../components/DestinationDetail/ImageGallery";
@@ -7,9 +7,10 @@ import TitleAndButtons from "../components/DestinationDetail/TitleAndButtons";
 import AmenitiesList from "../components/DestinationDetail/AmenitiesList";
 import BookingForm from "../components/DestinationDetail/BookingForm";
 import Info from "../components/DestinationDetail/Info";
+import Reviews from "../components/DestinationDetail/Reviews";
 
 const DestinationDetail = () => {
-  const { id } = useParams();
+  const { documentId } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -27,9 +28,9 @@ const DestinationDetail = () => {
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        const destinations = await getDestinations();
+        const destinations = await getDestinations({ documentId });
         const currentDestination = destinations.find(
-          (d) => d.id === parseInt(id)
+          (d) => d.documentId === documentId
         );
         setDestination(currentDestination);
         setLoading(false);
@@ -40,7 +41,7 @@ const DestinationDetail = () => {
     };
 
     fetchDestination();
-  }, [id]);
+  }, [documentId]);
 
   const handleReserve = () => {
     let formErrors = {};
@@ -59,16 +60,45 @@ const DestinationDetail = () => {
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
+      // Calculate number of nights
+      const checkInDate = new Date(selectedDates.checkIn);
+      const checkOutDate = new Date(selectedDates.checkOut);
+      const numberOfNights = Math.ceil(
+        (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+      );
+
+      // Calculate total amount
+      const totalAmount = numberOfNights * destination.price;
+      
+      // Service fee (10% of subtotal)
+      const serviceFee = Math.round(totalAmount * 0.10);
+      
+      // Total with service fee
+      const finalAmount = totalAmount + serviceFee;
+
       const reservationData = {
-        destinationId: id,
+        destinationId: documentId,
+        destinationTitle: destination.title,
+        location: destination.location,
+        image: destination.images?.[0],
         checkIn: selectedDates.checkIn,
         checkOut: selectedDates.checkOut,
         guests,
-        phoneNumber: selectedCountryCode + phoneNumber, // Append the country code to the phone number
+        phoneNumber: selectedCountryCode + phoneNumber,
         note,
+        subtotal: totalAmount,
+        serviceFee: serviceFee,
+        amount: finalAmount,
+        pricePerNight: destination.price,
+        numberOfNights,
+        rating: destination.rating,
       };
       navigate("/payment", { state: reservationData });
     }
+  };
+
+  const handleWriteReview = () => {
+    navigate(`/`);
   };
 
   const handleDateChange = (e, type) => {
@@ -92,27 +122,20 @@ const DestinationDetail = () => {
 
   return (
     <div className="max-w-[1800px] px-8 mx-auto">
-      {/* Main Content */}
       <ImageGallery
         destination={destination}
         activeImageIndex={activeImageIndex}
         setActiveImageIndex={setActiveImageIndex}
       />
 
-      {/* Destination Title and Action Buttons */}
       <TitleAndButtons destination={destination} />
 
-      {/* Property Details and Booking Card */}
-      <div className="grid md:grid-cols-3 gap-8 border">
+      <div className="grid md:grid-cols-3 gap-8">
         <div className="col-span-2">
-          {/* Info Section */}
           <Info destination={destination} />
-
-          {/* Amenities Section */}
           <AmenitiesList amenities={destination.amenities} />
         </div>
 
-        {/* Booking Card */}
         <BookingForm
           destination={destination}
           selectedDates={selectedDates}
@@ -130,26 +153,7 @@ const DestinationDetail = () => {
         />
       </div>
 
-      {/* Reviews Section */}
-      {destination.reviews && destination.reviews.length > 0 && (
-        <div className="mt-8">
-          <h3 className="font-bold text-xl">Reviews</h3>
-          <ul>
-            {destination.reviews.map((review, index) => (
-              <li key={index} className="my-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold">Rating: {review.Rating}</span>
-                  <span className="text-sm text-gray-500">
-                    by {review.user}
-                  </span>{" "}
-                  {/* Display the user */}
-                </div>
-                <p className="text-sm text-gray-500">{review.Comment}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <Reviews destination={destination} onWriteReview={handleWriteReview} />
     </div>
   );
 };

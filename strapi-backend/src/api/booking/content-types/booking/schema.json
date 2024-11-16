@@ -21,14 +21,6 @@
     "NumberOfGuests": {
       "type": "integer"
     },
-    "CurrentStatus": {
-      "type": "enumeration",
-      "enum": [
-        "Pending,",
-        "Confirmed,",
-        "Cancelled"
-      ]
-    },
     "destination": {
       "type": "relation",
       "relation": "manyToOne",
@@ -46,6 +38,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "bookings"
+    },
+    "Note": {
+      "type": "text"
     }
   }
 }
