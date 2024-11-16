@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../services/Api";
 import { authService } from "../../services/Auth";
 import { Button } from "../../components/Button";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -14,37 +15,37 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Reset previous errors
     setFormErrors({});
-  
+
     let errors = {};
-  
+
     // Validation for identifier (email/username)
     if (!identifier) {
       errors.identifier = "Email is required.";
     }
-  
+
     // Validation for password
     if (!password) {
       errors.password = "Password is required.";
     }
-  
+
     // If there are any validation errors, set them and return
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
-  
+
     try {
       const { jwt, user } = await login(identifier, password);
       authService.login(jwt, user.username); // Save token and username
+      toast.success("You have successfully logged in!");
       navigate("/"); // Redirect to home
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }
   };
-  
 
   const getInputBorderClass = (field) => {
     return formErrors[field] ? "border-red-500" : "border-gray-300";

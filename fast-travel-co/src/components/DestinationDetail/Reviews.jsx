@@ -2,6 +2,7 @@ import { Button } from "../Button";
 import { authService } from "../../services/Auth";
 import { useState, useEffect } from "react";
 import { submitReview, getUserDetails, deleteReview } from "../../services/Api";
+import { toast } from "react-toastify";
 
 /* eslint-disable react/prop-types */
 const Reviews = ({ destination }) => {
@@ -29,7 +30,7 @@ const Reviews = ({ destination }) => {
     if (authService.isLoggedIn()) {
       setIsReviewing(true);
     } else {
-      alert("You must be logged in to write a review.");
+      toast.error("You must be logged in to write a review.");
     }
   };
 
@@ -39,13 +40,13 @@ const Reviews = ({ destination }) => {
 
   const handleReviewSubmit = async () => {
     if (reviewText.trim() === "") {
-      alert("Review text cannot be empty.");
+      toast.warning("Review cannot be empty");
       return;
     }
 
     const jwt = authService.getToken();
     if (!jwt) {
-      alert("Authentication error. Please log in again.");
+      toast.error("Authentication error. Please log in again.");
       return;
     }
 
@@ -70,7 +71,7 @@ const Reviews = ({ destination }) => {
       setIsReviewing(false);
     } catch (error) {
       console.error("Failed to submit review:", error);
-      alert("Could not submit your review. Please try again.");
+      toast.error("Could not submit your review. Please try again.");
     }
   };
 
@@ -78,7 +79,7 @@ const Reviews = ({ destination }) => {
   const handleDeleteReview = async (documentId) => {
     const jwt = authService.getToken();
     if (!jwt) {
-      alert("Authentication error. Please log in again.");
+      toast.error("Authentication error. Please log in again.");
       return;
     }
 
@@ -92,7 +93,7 @@ const Reviews = ({ destination }) => {
         if (
           review.users_permissions_user?.documentId !== currentUser?.documentId
         ) {
-          alert("You cannot delete reviews that do not belong to you.");
+          toast.warn("You cannot delete reviews that do not belong to you.");
           return;
         }
 
@@ -100,11 +101,11 @@ const Reviews = ({ destination }) => {
         setReviews(
           reviews.filter((review) => review.documentId !== documentId)
         );
-        alert("Review deleted successfully.");
+        toast.success("Review deleted successfully.");
         setConfirmDelete(null); // Reset the confirmation state after successful deletion
       } catch (error) {
         console.error("Failed to delete review:", error);
-        alert("Could not delete your review. Please try again.");
+        toast.error("Could not delete your review. Please try again.");
       }
     } else {
       setConfirmDelete(documentId); // Set documentId to prompt confirmation

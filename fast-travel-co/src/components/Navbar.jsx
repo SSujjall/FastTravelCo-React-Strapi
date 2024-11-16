@@ -1,6 +1,7 @@
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/Auth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     authService.logout();
+    toast.success("You have been logged out successfully.");
     navigate("/login"); // Redirect to login after logout
   };
 

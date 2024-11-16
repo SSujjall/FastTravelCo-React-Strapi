@@ -69,10 +69,10 @@ const DestinationDetail = () => {
 
       // Calculate total amount
       const totalAmount = numberOfNights * destination.price;
-      
+
       // Service fee (10% of subtotal)
-      const serviceFee = Math.round(totalAmount * 0.10);
-      
+      const serviceFee = Math.round(totalAmount * 0.1);
+
       // Total with service fee
       const finalAmount = totalAmount + serviceFee;
 

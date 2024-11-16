@@ -27,13 +27,15 @@ const SearchSection = ({ setSearchCriteria }) => {
         <div className="flex flex-row lg:flex-row justify-between items-stretch lg:items-center font-semibold gap-4 lg:gap-2">
           {/* Location Section */}
           <div className="flex items-center space-x-2 flex-1">
-            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">location_on</span>
+            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">
+              location_on
+            </span>
             <input
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter location"
-              className="border rounded p-2 w-full outline-none"
+              className="border-0 rounded p-2 w-full outline-none"
             />
           </div>
 
@@ -41,19 +43,22 @@ const SearchSection = ({ setSearchCriteria }) => {
 
           {/* Dates Section */}
           <div className="hidden md:flex items-center space-x-2 flex-1">
-            <span className="material-icons p-2 bg-gray-200 rounded-full">calendar_today</span>
+            <span className="material-icons p-2 bg-gray-200 rounded-full">
+              calendar_today
+            </span>
             <div className="flex flex-1 gap-2">
               <input
                 type="date"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
-                className="border rounded p-2 w-full outline-none"
+                className="border-0 rounded p-2 w-full outline-none"
               />
+              _
               <input
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
-                className="border rounded p-2 w-full outline-none"
+                className="border-0 rounded p-2 w-full outline-none"
               />
             </div>
           </div>
@@ -62,13 +67,15 @@ const SearchSection = ({ setSearchCriteria }) => {
 
           {/* Guests Section */}
           <div className="hidden md:flex items-center space-x-2 flex-1">
-            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">person</span>
+            <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">
+              person
+            </span>
             <input
               type="number"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
               placeholder="Guests"
-              className="border rounded p-2 w-full outline-none"
+              className="border-0 rounded p-2 w-full outline-none"
             />
           </div>
 

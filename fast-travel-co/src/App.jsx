@@ -9,10 +9,12 @@ import Login from "./pages/Auth/login";
 import Signup from "./pages/Auth/signup";
 import PrivateRoute from "./pages/PrivateRoute";
 import Payment from "./pages/Payment";
+import Toast from "./components/Toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toast />
       <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />

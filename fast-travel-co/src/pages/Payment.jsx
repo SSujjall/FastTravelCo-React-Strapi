@@ -6,6 +6,7 @@ import { getUserDetails } from "../services/Api";
 import { createPaymentAndBooking } from "../services/Api";
 import { Button } from "../components/Button";
 import StarRating from "../components/StarRating";
+import { toast } from "react-toastify";
 
 const PaymentMethod = ({ method, selected, onChange }) => (
   <label className="flex items-center space-x-3 p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
@@ -95,6 +96,8 @@ const Payment = () => {
 
       // Create payment and booking
       await createPaymentAndBooking(paymentData, authService.getToken());
+
+      toast.success("Payment successful! Your booking has been confirmed.");
 
       navigate("/booking-confirmation", {
         state: {
