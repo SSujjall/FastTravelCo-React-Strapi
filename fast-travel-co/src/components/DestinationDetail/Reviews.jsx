@@ -139,15 +139,10 @@ const Reviews = ({ destination }) => {
         {/* Review Input */}
         {isReviewing && (
           <div className="mb-4">
-            <textarea
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Write your review here..."
-              className="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            ></textarea>
-
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2">Rating:</label>
+              <label className="block text-gray-700 mb-2 font-semibold">
+                Rate your stay:
+              </label>
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
@@ -163,6 +158,17 @@ const Reviews = ({ destination }) => {
                 ))}
               </div>
             </div>
+
+            <label className="block text-gray-700 mb-2 font-semibold mt-8">
+              Message:
+            </label>
+            <textarea
+              value={reviewText}
+              rows={5}
+              onChange={(e) => setReviewText(e.target.value)}
+              placeholder="Write your review here..."
+              className="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            ></textarea>
           </div>
         )}
 
