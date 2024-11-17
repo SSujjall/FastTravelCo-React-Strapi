@@ -7,5 +7,6 @@ FOR FRONT END:
 FOR BACK END:
 1. Open strapi-backend in vs code.
 2. Type the command "npm i".
-3. Type the command "npm run develop"
-4. The project is running.
+3. Type the command "npm rebuild better-sqlite3".
+4. Type the command "npm run develop"
+5. The project is running.
