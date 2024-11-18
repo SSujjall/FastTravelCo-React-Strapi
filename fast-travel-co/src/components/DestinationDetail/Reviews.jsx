@@ -1,4 +1,4 @@
-import { Button } from "../Button";
+import { Button } from "../Shared/Button";
 import { authService } from "../../services/Auth";
 import { useState, useEffect } from "react";
 import { submitReview, getUserDetails, deleteReview } from "../../services/Api";

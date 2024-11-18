@@ -1,16 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import Index from "./pages/Index";
+import Index from "./pages/Home/Index";
 import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import DestinationDetail from "./pages/DestinationDetail";
-import Navbar from "./components/Navbar";
+import DestinationDetail from "./pages/Users/DestinationDetail";
+import Navbar from "./components/Shared/Navbar";
 import Login from "./pages/Auth/login";
 import Signup from "./pages/Auth/signup";
-import PrivateRoute from "./pages/PrivateRoute";
-import Payment from "./pages/Payment";
-import MyBookings from "./pages/MyBookings";
-import Toast from "./components/Toast";
+import PrivateRoute from "./Utils/PrivateRoute";
+import Payment from "./pages/Users/Payment";
+import MyBookings from "./pages/Users/MyBookings";
+import Toast from "./components/Shared/Toast";
+import FooterSection from "./components/Shared/Footer";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         {/* If route is incorrect then it shows the 404 page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <FooterSection />
     </BrowserRouter>
   );
 }

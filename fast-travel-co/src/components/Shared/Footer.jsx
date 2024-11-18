@@ -1,6 +1,6 @@
 const FooterSection = () => {
   return (
-    <footer className="bg-gray-100 text-black py-10">
+    <footer className="bg-gray-100 text-black py-10 mt-8">
       <div className="container mx-auto px-8">
         <div className="flex flex-col md:flex-row justify-between mb-8">
           <div>

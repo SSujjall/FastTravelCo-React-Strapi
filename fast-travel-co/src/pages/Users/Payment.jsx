@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useLocation, Navigate, useNavigate } from "react-router-dom";
-import { authService } from "../services/Auth";
-import { getUserDetails } from "../services/Api";
-import { createPaymentAndBooking } from "../services/Api";
-import { Button } from "../components/Button";
-import StarRating from "../components/StarRating";
+import { authService } from "../../services/Auth";
+import { getUserDetails } from "../../services/Api";
+import { createPaymentAndBooking } from "../../services/Api";
+import { Button } from "../../components/Shared/Button";
+import StarRating from "../../components/Shared/StarRating";
 import { toast } from "react-toastify";
 
 const PaymentMethod = ({ method, selected, onChange }) => (

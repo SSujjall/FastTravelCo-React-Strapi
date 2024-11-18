@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Button } from "./Button";
+import { Button } from "../Shared/Button";
 
 const SearchSection = ({ setSearchCriteria }) => {
   const [location, setLocation] = useState("");

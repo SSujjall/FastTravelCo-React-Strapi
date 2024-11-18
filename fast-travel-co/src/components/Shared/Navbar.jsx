@@ -1,6 +1,6 @@
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/Auth";
+import { authService } from "../../services/Auth";
 import { toast } from "react-toastify";
 
 const Navbar = () => {

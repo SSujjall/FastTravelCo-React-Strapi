@@ -13,6 +13,7 @@ const ImageGallery = ({
             src={destination.images[activeImageIndex]}
             alt={destination.location}
             className="w-full object-cover"
+            loading="lazy"
           />
         </div>
       </div>
@@ -29,6 +30,7 @@ const ImageGallery = ({
               src={image}
               alt={`${destination.location} ${index + 1}`}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         ))}

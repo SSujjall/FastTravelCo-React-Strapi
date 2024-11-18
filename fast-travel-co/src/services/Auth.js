@@ -1,3 +1,5 @@
+// Local storage used here for saving tokens and username.
+
 export const authService = {
   isLoggedIn() {
     const token = localStorage.getItem("jwt");

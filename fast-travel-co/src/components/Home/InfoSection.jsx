@@ -3,7 +3,7 @@ import {
   destinations,
   landmarks,
   testimonials,
-} from "../Utils/constants";
+} from "../../Utils/constants";
 
 const InfoSection = () => {
   return (
@@ -37,11 +37,13 @@ const InfoSection = () => {
                 src={heroImages[0].image}
                 alt="beach couple"
                 className="absolute top-0 right-1/4 w-2/3 h-80 lg:h-[500px] lg:w-2/4 object-cover rounded-lg shadow-lg transform translate-y-[40px] lg:translate-y-[0px] lg:translate-x-[-20%]"
+                loading="lazy"
               />
               <img
                 src={heroImages[1].image}
                 alt="mountains"
                 className="absolute bottom-0 left-1/4 w-2/3 h-80 lg:h-[500px] lg:w-2/4 object-cover rounded-lg shadow-lg transform translate-y-[-40px] lg:translate-y-[0px] lg:translate-x-[50%]"
+                loading="lazy"
               />
             </div>
           </div>
@@ -49,7 +51,7 @@ const InfoSection = () => {
       </section>
 
       {/* Top Notch Destination */}
-      <section className="py-12 px-8">
+      <section className="px-8 mt-10">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">
             Top Notch Destination
@@ -66,7 +68,7 @@ const InfoSection = () => {
               />
               <div className="absolute top-4 left-4">
                 <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                  THAILAND
+                  {destinations[0].location.toUpperCase()}
                 </span>
               </div>
             </div>
@@ -81,7 +83,7 @@ const InfoSection = () => {
               />
               <div className="absolute top-4 left-4">
                 <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                  NORWAY
+                  {destinations[1].location.toUpperCase()}
                 </span>
               </div>
             </div>
@@ -92,12 +94,12 @@ const InfoSection = () => {
                 <img
                   src={destinations[2].image}
                   alt="Nepal mountains"
-                  className="w-full h-[190px] lg:h-[290px] object-cover"
+                  className="w-full sm:h-[250px] md:h-[190px] lg:h-[290px] object-cover"
                   loading="lazy"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                    NEPAL
+                    {destinations[2].location.toUpperCase()}
                   </span>
                 </div>
               </div>
@@ -106,12 +108,12 @@ const InfoSection = () => {
                 <img
                   src={destinations[3].image}
                   alt="Singapore night"
-                  className="w-full h-[190px] lg:h-[290px] object-cover"
+                  className="w-full sm:h-[250px] md:h-[190px] lg:h-[290px] object-cover"
                   loading="lazy"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                    SINGAPORE
+                    {destinations[3].location.toUpperCase()}
                   </span>
                 </div>
               </div>
@@ -131,12 +133,12 @@ const InfoSection = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
               >
                 <div className="flex items-center mb-4">
                   {/* Profile Picture */}
                   <img
-                    src={testimonial.profilePicture} // Assuming you have a profile picture URL in the testimonial data
+                    src={testimonial.profilePicture}
                     alt={testimonial.author}
                     className="w-12 h-12 rounded-full object-cover mr-4"
                     loading="lazy"

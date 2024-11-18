@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../services/Api";
-import { Button } from "../../components/Button";
+import { Button } from "../../components/Shared/Button";
 
 const Register = () => {
   const [username, setUsername] = useState("");

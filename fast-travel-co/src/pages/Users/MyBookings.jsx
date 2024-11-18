@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { authService } from "../services/Auth"; // Assuming you have this service for token management
-import { getUserDetails, deleteBooking } from "../services/Api"; // Assuming this gets user details and delete API function
-import { getBookingsByUser } from "../services/Api"; // This fetches bookings by user
-import { Button } from "../components/Button";
+import { authService } from "../../services/Auth"; // Assuming you have this service for token management
+import { getUserDetails, deleteBooking } from "../../services/Api"; // Assuming this gets user details and delete API function
+import { getBookingsByUser } from "../../services/Api"; // This fetches bookings by user
+import { Button } from "../../components/Shared/Button";
 import { toast } from "react-toastify"; // Import toast
 
 // Make sure to import toastify's CSS file in your root app file (usually App.js)

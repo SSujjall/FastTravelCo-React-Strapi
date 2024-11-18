@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Card } from "../Card";
-import { CardContent } from "../CardContent";
-import { Button } from "../Button";
+import { Card } from "../Shared/Card";
+import { CardContent } from "../Shared/CardContent";
+import { Button } from "../Shared/Button";
 
 const BookingForm = ({
   destination,

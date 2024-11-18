@@ -2,13 +2,14 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Home, Building2, Castle, Building, Tent } from "lucide-react";
-import { Button } from "./Button";
-import { getDestinations } from "../services/Api";
+import { Button } from "../Shared/Button";
+import { getDestinations } from "../../services/Api";
 import DestinationCard from "./DestinationCard";
 
 const Destinations = ({ searchCriteria }) => {
   const [activeFilter, setActiveFilter] = useState("all"); // 'all' for no type filter
   const [destinations, setDestinations] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(8); // Number of visible cards
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -43,6 +44,12 @@ const Destinations = ({ searchCriteria }) => {
           (dest) => dest.type.toLowerCase() === activeFilter.toLowerCase()
         );
 
+  const visibleDestinations = filteredDestinations.slice(0, visibleCount);
+
+  const handleShowMore = () => {
+    setVisibleCount((prevCount) => prevCount + 8); // Show 8 more destinations
+  };
+
   if (loading) {
     return <div className="text-center py-8">Loading...</div>;
   }
@@ -58,7 +65,10 @@ const Destinations = ({ searchCriteria }) => {
           {filters.map(({ id, icon: Icon, label }) => (
             <button
               key={id}
-              onClick={() => setActiveFilter(id)}
+              onClick={() => {
+                setActiveFilter(id);
+                setVisibleCount(8); // Reset visible count when filter changes
+              }}
               className={`relative flex items-center gap-2 px-1 py-2 ${
                 activeFilter === id ? "font-bold text-black" : "text-gray-700"
               }`}
@@ -87,10 +97,20 @@ const Destinations = ({ searchCriteria }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredDestinations.map((destination) => (
+        {visibleDestinations.map((destination) => (
           <DestinationCard key={destination.id} destination={destination} />
         ))}
       </div>
+
+      {visibleCount < filteredDestinations.length && (
+        <div className="text-center mt-6">
+          <Button
+            text="Show More"
+            onClick={handleShowMore}
+            className="bg-black hover:bg-gray-700 mx-auto mt-10 text-white py-6 max-w-[200px] rounded"
+          />
+        </div>
+      )}
     </div>
   );
 };

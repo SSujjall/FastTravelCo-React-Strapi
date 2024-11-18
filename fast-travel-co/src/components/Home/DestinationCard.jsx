@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import StarRating from "./StarRating"; // Adjust the path as per your folder structure
+import StarRating from "../Shared/StarRating"; // Adjust the path as per your folder structure
 
 const DestinationCard = ({ destination }) => {
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ const DestinationCard = ({ destination }) => {
             src={destination.images[activeImageIndex]}
             alt={destination.location}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getDestinations } from "../services/Api";
-import ImageGallery from "../components/DestinationDetail/ImageGallery";
-import TitleAndButtons from "../components/DestinationDetail/TitleAndButtons";
-import AmenitiesList from "../components/DestinationDetail/AmenitiesList";
-import BookingForm from "../components/DestinationDetail/BookingForm";
-import Info from "../components/DestinationDetail/Info";
-import Reviews from "../components/DestinationDetail/Reviews";
-import { getUnavailableDatesForDestination } from "../services/Api";
-import Calendar from "../components/DestinationDetail/Calendar";
+import { getDestinations } from "../../services/Api";
+import ImageGallery from "../../components/DestinationDetail/ImageGallery";
+import TitleAndButtons from "../../components/DestinationDetail/TitleAndButtons";
+import AmenitiesList from "../../components/DestinationDetail/AmenitiesList";
+import BookingForm from "../../components/DestinationDetail/BookingForm";
+import Info from "../../components/DestinationDetail/Info";
+import Reviews from "../../components/DestinationDetail/Reviews";
+import { getUnavailableDatesForDestination } from "../../services/Api";
+import Calendar from "../../components/DestinationDetail/Calendar";
 
 const DestinationDetail = () => {
   const { documentId } = useParams();
@@ -153,7 +153,7 @@ const DestinationDetail = () => {
           <Info destination={destination} />
           <AmenitiesList amenities={destination.amenities} />
 
-          <h3 className="text-xl font-semibold">Available Date</h3>
+          <h3 className="text-xl font-semibold mt-8">Availabilities</h3>
           <Calendar unavailableDates={unavailableDates} />
         </div>
 

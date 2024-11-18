@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/Api";
 import { authService } from "../../services/Auth";
-import { Button } from "../../components/Button";
+import { Button } from "../../components/Shared/Button";
 import { toast } from "react-toastify";
 
 const Login = () => {
