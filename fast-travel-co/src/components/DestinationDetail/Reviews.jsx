@@ -3,6 +3,7 @@ import { authService } from "../../services/Auth";
 import { useState, useEffect } from "react";
 import { submitReview, getUserDetails, deleteReview } from "../../services/Api";
 import { toast } from "react-toastify";
+import StarRating from "../Shared/StarRating";
 
 /* eslint-disable react/prop-types */
 const Reviews = ({ destination }) => {
@@ -148,7 +149,7 @@ const Reviews = ({ destination }) => {
                   <span
                     key={star}
                     className={`material-icons cursor-pointer ${
-                      star <= rating ? "text-yellow-500" : "text-gray-300"
+                      star <= rating ? "text-orange-600" : "text-gray-300"
                     }`}
                     onClick={() => handleStarClick(star)}
                     style={{ fontSize: "30px" }}
@@ -192,10 +193,9 @@ const Reviews = ({ destination }) => {
                       <p className="font-semibold text-gray-800">
                         {review.user}
                       </p>
-                      <div className="flex items-center text-orange-600">
-                        {"★".repeat(review.Rating)}
-                        {"☆".repeat(5 - review.Rating)}
-                      </div>
+
+                      {/* Using star rating component to display the rating */}
+                      <StarRating rating={review.Rating} />
                     </div>
                   </div>
 
