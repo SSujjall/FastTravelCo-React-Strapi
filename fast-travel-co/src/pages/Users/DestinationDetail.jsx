@@ -157,21 +157,23 @@ const DestinationDetail = () => {
           <Calendar unavailableDates={unavailableDates} />
         </div>
 
-        <BookingForm
-          destination={destination}
-          selectedDates={selectedDates}
-          guests={guests}
-          phoneNumber={phoneNumber}
-          selectedCountryCode={selectedCountryCode}
-          note={note}
-          setGuests={setGuests}
-          setPhoneNumber={setPhoneNumber}
-          setSelectedCountryCode={setSelectedCountryCode}
-          setNote={setNote}
-          handleDateChange={handleDateChange}
-          handleReserve={handleReserve}
-          getInputBorderClass={getInputBorderClass}
-        />
+        <div className="col-span-2 md:col-span-1">
+          <BookingForm
+            destination={destination}
+            selectedDates={selectedDates}
+            guests={guests}
+            phoneNumber={phoneNumber}
+            selectedCountryCode={selectedCountryCode}
+            note={note}
+            setGuests={setGuests}
+            setPhoneNumber={setPhoneNumber}
+            setSelectedCountryCode={setSelectedCountryCode}
+            setNote={setNote}
+            handleDateChange={handleDateChange}
+            handleReserve={handleReserve}
+            getInputBorderClass={getInputBorderClass}
+          />
+        </div>
       </div>
 
       <Reviews destination={destination} onWriteReview={handleWriteReview} />

@@ -44,6 +44,7 @@ const Login = () => {
       navigate("/"); // Redirect to home
     } catch (err) {
       setError("Invalid credentials. Please try again.");
+      toast.error("Invalid credentials. Please try again.");
     }
   };
 
@@ -61,7 +62,7 @@ const Login = () => {
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Email"
+              placeholder="Username or Email"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${getInputBorderClass(

@@ -73,9 +73,9 @@ const Calendar = ({ unavailableDates }) => {
   const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
   return (
-    <div className="flex gap-8 mt-4 shadow-xl border border-gray-200 rounded p-5">
+    <div className="flex flex-col md:flex-row gap-8 mt-4 shadow-xl border border-gray-200 rounded p-5">
       {/* Current Month Calendar */}
-      <div className=" rounded-lg p-6 flex-1">
+      <div className=" rounded-lg p-6 md:p-2 lg:p-6 flex-1">
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={goToPreviousMonth}
@@ -133,7 +133,7 @@ const Calendar = ({ unavailableDates }) => {
       </div>
 
       {/* Next Month Calendar */}
-      <div className="rounded-lg p-6 flex-1">
+      <div className="rounded-lg p-6 md:p-2 lg:p-6  flex-1">
         <div className="flex items-center justify-between mb-4">
           <div className="w-8" /> {/* Spacer for alignment */}
           <div className="text-sm font-medium">

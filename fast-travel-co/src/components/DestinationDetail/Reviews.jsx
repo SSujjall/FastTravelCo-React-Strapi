@@ -118,7 +118,7 @@ const Reviews = ({ destination }) => {
   };
 
   return (
-    <div className="grid grid-cols-3 mt-12 rounded-lg">
+    <div className="grid md:grid-cols-3 mt-12 rounded-lg">
       <div className="col-span-2">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-xl text-gray-700">Reviews</h3>

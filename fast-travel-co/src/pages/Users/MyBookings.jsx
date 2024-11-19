@@ -76,7 +76,7 @@ const MyBookings = () => {
   }
 
   return (
-    <div className="my-8 px-4 md:px-8">
+    <div className="my-8 px-4 md:px-8 h-screen">
       <h1 className="text-3xl font-bold mb-4">My Bookings</h1>
       <div className="space-y-6">
         {bookings.length === 0 ? (
