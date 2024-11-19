@@ -109,7 +109,7 @@ const SearchSection = ({ setSearchCriteria }) => {
               type="number"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
-              placeholder="Guests"
+              placeholder="No. of Guests"
               className="border-0 rounded p-2 w-full outline-none"
             />
           </div>

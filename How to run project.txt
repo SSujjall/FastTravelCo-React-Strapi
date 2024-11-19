@@ -1,3 +1,5 @@
+YOU NEED TO HAVE NODE AND NPM INSTALLED.
+
 FOR FRONT END:
 1. Open fast-travel-co in vs code.
 2. Type the command "npm i".
