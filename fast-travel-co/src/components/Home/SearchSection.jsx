@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Button } from "../Shared/Button";
 
-const LargeSearchSection = ({
+const SearchSection = ({
   searchCriteria,
   setSearchCriteria,
   onSearchClick,
+  variant = "large",
 }) => {
   const [location, setLocation] = useState(searchCriteria.location || "");
   const [checkIn, setCheckIn] = useState(searchCriteria.checkIn || "");
@@ -32,9 +33,21 @@ const LargeSearchSection = ({
     ).toLocaleDateString()}`;
   };
 
+  const containerClasses =
+    variant === "large"
+      ? "max-w-7xl mx-auto p-3 px-4 bg-white border border-slate-100 shadow-lg rounded-lg"
+      : "max-w-4xl mx-auto p-3 bg-white border border-slate-100 shadow-lg rounded-full";
+
+  const textSizeClasses = variant === "large" ? "" : "text-sm";
+
+  const separatorClasses =
+    variant === "large"
+      ? "hidden lg:block mx-4 h-16 border-l border-gray-200"
+      : "hidden lg:block mx-4 h-10 my-auto border-l border-gray-200";
+
   return (
     <div className="px-4 py-6">
-      <div className="max-w-7xl mx-auto p-3 px-4 bg-white border border-slate-100 shadow-lg rounded-lg">
+      <div className={containerClasses}>
         <div className="flex flex-row justify-between items-stretch font-semibold gap-4">
           {/* Location Section */}
           <div className="flex items-center space-x-2 flex-1">
@@ -46,11 +59,11 @@ const LargeSearchSection = ({
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter location"
-              className="border-0 rounded p-2 w-full outline-none"
+              className={`border-0 rounded p-2 w-full outline-none ${textSizeClasses}`}
             />
           </div>
 
-          <div className="hidden lg:block mx-4 h-16 border-l border-gray-200" />
+          <div className={separatorClasses} />
 
           {/* Dates Section */}
           <div className="hidden md:flex items-center space-x-2 flex-1 relative">
@@ -61,7 +74,9 @@ const LargeSearchSection = ({
               className="flex flex-1 cursor-pointer p-2"
               onClick={() => setIsDatePickerVisible(!isDatePickerVisible)}
             >
-              <span className="text-gray-600">{formatDateRange()}</span>
+              <span className={`text-gray-600 ${textSizeClasses}`}>
+                {formatDateRange()}
+              </span>
             </div>
 
             {/* Date Picker Inputs */}
@@ -100,7 +115,7 @@ const LargeSearchSection = ({
             )}
           </div>
 
-          <div className="hidden lg:block mx-4 h-16 border-l border-gray-200" />
+          <div className={separatorClasses} />
 
           {/* Guests Section */}
           <div className="hidden md:flex items-center space-x-2 flex-1">
@@ -112,17 +127,24 @@ const LargeSearchSection = ({
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
               placeholder="No. of Guests"
-              className="border-0 rounded p-2 w-full outline-none"
+              className={`border-0 rounded p-2 w-full outline-none ${textSizeClasses}`}
             />
           </div>
 
           {/* Search Button */}
           <div className="flex items-center">
             <Button
-              text="Search"
+              text={variant === "large" ? "Search" : ""}
               onClick={handleSearch}
               icon="search"
-              className="bg-black rounded text-white hover:bg-slate-600 w-full lg:w-auto min-w-[120px]"
+              className={`
+                bg-black rounded text-white hover:bg-slate-600 
+                ${
+                  variant === "large"
+                    ? "w-full lg:w-auto min-w-[120px]"
+                    : "w-full lg:w-auto min-w-[40px] rounded-full"
+                }
+              `}
             />
           </div>
         </div>
@@ -131,4 +153,4 @@ const LargeSearchSection = ({
   );
 };
 
-export default LargeSearchSection;
+export default SearchSection;

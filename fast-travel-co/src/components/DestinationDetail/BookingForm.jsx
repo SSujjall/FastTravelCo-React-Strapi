@@ -106,7 +106,7 @@ const BookingForm = ({
                 <option value="+91">India +91</option>
               </select>
               <input
-                type="text"
+                type="number"
                 placeholder="Phone number"
                 className="w-3/4 p-2 outline-none"
                 value={phoneNumber}

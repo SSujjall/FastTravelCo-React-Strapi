@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Shared/Button";
+import "../css/NotFound.css"; 
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -7,15 +8,15 @@ const NotFound = () => {
   const goToHome = () => {
     navigate("/");
   };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
-      <h1 className="text-8xl font-bold mb-4">404</h1>
-      <p className="text-xl mb-4">
+    <div className="not-found">
+      <h1 className="not-found-heading">404</h1>
+      <p className="not-found-text">
         Oops! The page you&apos;re looking for doesn&apos;t exist.
       </p>
-
       <Button
-        className={"max-w-40 text-white rounded bg-black hover:bg-gray-700"}
+        className="not-found-button"
         onClick={goToHome}
         text="Go Home"
       ></Button>

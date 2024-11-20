@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../../services/Auth";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-import LargeSearchSection from "../Home/LargeSearchSection";
-import CompactSearchSection from "../Home/CompactSearchSection";
+import SearchSection from "../Home/SearchSection";
 
 const Navbar = ({ searchCriteria, setSearchCriteria }) => {
   const navigate = useNavigate();
@@ -17,12 +16,12 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
   const isLoginOrRegisterPage =
     location.pathname === "/login" || location.pathname === "/register";
 
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 0 ? true : false);
+  };
+
   // Detect scroll and toggle header layout
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -59,11 +58,12 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
   return (
     <div
       className={`sticky top-0 bg-white z-50 transition-all duration-300 mb-5 
-        ${shouldShowFullHeader ? "py-6" : "py-6 shadow-md"}`}
+       ${shouldShowFullHeader ? "shadow py-6" : "shadow-md"} 
+       ${isLoginOrRegisterPage ? "py-4" : ""}`}
     >
       <div className="flex flex-col justify-between px-4 lg:px-8">
-        {/* Top Section: Logo and Buttons */}
-        <div className={"flex items-center justify-between"}>
+        {/* Main Section */}
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="/" className="text-xl font-bold flex-shrink-0">
             fasttravelco.
@@ -72,17 +72,17 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
           {/* Compact Search Section */}
           {!shouldShowFullHeader && !isLoginOrRegisterPage && (
             <div className="flex-grow mx-4 hidden sm:block">
-              <CompactSearchSection
+              <SearchSection
                 searchCriteria={searchCriteria}
                 setSearchCriteria={setSearchCriteria}
-                isCompact={true}
                 onSearchClick={handleSearchClick}
+                variant="compact"
               />
             </div>
           )}
 
           {/* Buttons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 md:space-x-3 lg:space-x-4">
             {!isLoggedIn ? (
               <>
                 <Button
@@ -93,7 +93,7 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
                 <Button
                   text="Sign-in"
                   onClick={handleLoginClick}
-                  className="bg-black text-white py-2 px-4 rounded hover:bg-slate-600"
+                  className="bg-black text-white py-2 px-4 rounded min-w-[90px] hover:bg-slate-600"
                 />
               </>
             ) : (
@@ -124,11 +124,11 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
         {/* Large Search Section */}
         {shouldShowFullHeader && (
           <div className="mt-4">
-            <LargeSearchSection
+            <SearchSection
               searchCriteria={searchCriteria}
               setSearchCriteria={setSearchCriteria}
-              isCompact={false}
               onSearchClick={handleSearchClick}
+              variant="large"
             />
           </div>
         )}
