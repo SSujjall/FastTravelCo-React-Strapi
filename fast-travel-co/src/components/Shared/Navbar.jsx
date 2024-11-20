@@ -14,12 +14,13 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
 
   const isHomePage = location.pathname === "/";
   const shouldShowFullHeader = isHomePage && !isScrolled;
-  const isLoginOrRegisterPage = location.pathname === "/login" || location.pathname === "/register";
+  const isLoginOrRegisterPage =
+    location.pathname === "/login" || location.pathname === "/register";
 
   // Detect scroll and toggle header layout
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > -0.9);
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
