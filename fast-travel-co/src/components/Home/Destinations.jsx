@@ -1,23 +1,27 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Home, Building2, Castle, Building, Tent } from "lucide-react";
 import { Button } from "../Shared/Button";
 import { getDestinations } from "../../services/Api";
 import DestinationCard from "./DestinationCard";
+import FilterModal from "../Shared/FilterModal"; // Import the new modal
 
 const Destinations = ({ searchCriteria }) => {
-  const [activeFilter, setActiveFilter] = useState("all"); // 'all' for no type filter
+  const [activeFilter, setActiveFilter] = useState("all");
   const [destinations, setDestinations] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(8); // Number of visible cards
+  const [filteredDestinations, setFilteredDestinations] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
         const data = await getDestinations(searchCriteria);
         setDestinations(data);
+        setFilteredDestinations(data);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch destinations");
@@ -37,17 +41,23 @@ const Destinations = ({ searchCriteria }) => {
     { id: "camphouse", icon: Tent, label: "Camp" },
   ];
 
-  const filteredDestinations =
+  const typeFilteredDestinations =
     activeFilter === "all"
-      ? destinations
-      : destinations.filter(
+      ? filteredDestinations
+      : filteredDestinations.filter(
           (dest) => dest.type.toLowerCase() === activeFilter.toLowerCase()
         );
 
-  const visibleDestinations = filteredDestinations.slice(0, visibleCount);
+  const visibleDestinations = typeFilteredDestinations.slice(0, visibleCount);
 
   const handleShowMore = () => {
-    setVisibleCount((prevCount) => prevCount + 8); // Show 8 more destinations
+    setVisibleCount((prevCount) => prevCount + 8);
+  };
+
+  const handleApplyFilters = (newFilteredDestinations) => {
+    setFilteredDestinations(newFilteredDestinations);
+    setVisibleCount(8); // Reset visible count after filtering
+    setActiveFilter("all"); // Reset type filter
   };
 
   if (loading) {
@@ -67,7 +77,7 @@ const Destinations = ({ searchCriteria }) => {
               key={id}
               onClick={() => {
                 setActiveFilter(id);
-                setVisibleCount(8); // Reset visible count when filter changes
+                setVisibleCount(8);
               }}
               className={`relative flex items-center gap-2 px-1 py-2 ${
                 activeFilter === id ? "font-bold text-black" : "text-gray-700"
@@ -85,15 +95,22 @@ const Destinations = ({ searchCriteria }) => {
         <div className="min-w-[100px] max-w-[200px] flex items-center justify-center">
           <Button
             text="Filter"
-            onClick={() => {}}
+            onClick={() => setIsFilterModalOpen(true)}
             icon="tune"
-            className="text-black border m-auto float-right"
+            className="text-black border m-auto float-right rounded"
           />
         </div>
       </div>
 
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        destinations={destinations}
+        onApplyFilters={handleApplyFilters}
+      />
+
       <div className="text-sm text-gray-600 mt-4 mb-6">
-        {filteredDestinations.length} total places found
+        {typeFilteredDestinations.length} total places found
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -102,7 +119,7 @@ const Destinations = ({ searchCriteria }) => {
         ))}
       </div>
 
-      {visibleCount < filteredDestinations.length && (
+      {visibleCount < typeFilteredDestinations.length && (
         <div className="text-center mt-6">
           <Button
             text="Show More"

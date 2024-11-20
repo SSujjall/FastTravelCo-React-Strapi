@@ -57,9 +57,9 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
 
   return (
     <div
-      className={`sticky top-0 bg-white z-50 transition-all duration-300 mb-5 
-       ${shouldShowFullHeader ? "shadow py-6" : "shadow-md"} 
-       ${isLoginOrRegisterPage ? "py-4" : ""}`}
+      className={`sticky top-0 bg-white z-50 mb-6
+       ${shouldShowFullHeader ? "py-6" : "shadow-md"} 
+       ${isLoginOrRegisterPage ? "py-4" : "p-2"}`}
     >
       <div className="flex flex-col justify-between px-4 lg:px-8">
         {/* Main Section */}
@@ -116,7 +116,7 @@ const Navbar = ({ searchCriteria, setSearchCriteria }) => {
 
         {/* Header Title */}
         {shouldShowFullHeader && (
-          <h2 className="text-4xl font-bold text-center mt-10">
+          <h2 className="text-4xl font-bold text-center mt-16">
             Your Next Destination Awaits
           </h2>
         )}
