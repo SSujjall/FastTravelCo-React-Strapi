@@ -4,7 +4,6 @@
     cursor: pointer;
     outline: none;
     font-weight: 500;
-    border-radius: 0.31rem;
     transition: 0.2s ease;
     display: flex;
     flex-direction: row;

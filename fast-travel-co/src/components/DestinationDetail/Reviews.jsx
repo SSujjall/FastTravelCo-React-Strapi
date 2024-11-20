@@ -132,7 +132,7 @@ const Reviews = ({ destination }) => {
             <Button
               onClick={handleWriteReviewClick}
               text={"Write a review"}
-              className="bg-white border-2 max-w-[160px] border-black text-black hover:bg-black hover:text-white"
+              className="bg-white border-2 rounded max-w-[160px] border-black text-black hover:bg-black hover:text-white"
             />
           )}
         </div>

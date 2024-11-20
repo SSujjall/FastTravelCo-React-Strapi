@@ -1,14 +1,10 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 import Destinations from "../../components/Home/Destinations";
 import InfoSection from "../../components/Home/InfoSection";
-import SearchSection from "../../components/Home/SearchSection";
 
-const Index = () => {
-  const [searchCriteria, setSearchCriteria] = useState({});
-
+const Index = ({ searchCriteria }) => {
   return (
     <div>
-      <SearchSection setSearchCriteria={setSearchCriteria} />
       <Destinations searchCriteria={searchCriteria} />
       <InfoSection />
     </div>

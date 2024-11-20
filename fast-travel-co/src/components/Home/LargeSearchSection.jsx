@@ -2,7 +2,11 @@
 import { useState } from "react";
 import { Button } from "../Shared/Button";
 
-const SearchSection = ({ searchCriteria, setSearchCriteria, isCompact, onSearchClick }) => {
+const LargeSearchSection = ({
+  searchCriteria,
+  setSearchCriteria,
+  onSearchClick,
+}) => {
   const [location, setLocation] = useState(searchCriteria.location || "");
   const [checkIn, setCheckIn] = useState(searchCriteria.checkIn || "");
   const [checkOut, setCheckOut] = useState(searchCriteria.checkOut || "");
@@ -29,11 +33,9 @@ const SearchSection = ({ searchCriteria, setSearchCriteria, isCompact, onSearchC
   };
 
   return (
-    <div className={`${isCompact ? "py-0" : "px-4 py-6"}`}>
-      <div
-        className={`max-w-7xl mx-auto ${isCompact ? "p-2" : "p-3"} bg-white border border-slate-100 shadow-lg rounded-lg`}
-      >
-        <div className="flex flex-row lg:flex-row justify-between items-stretch lg:items-center font-semibold gap-4 lg:gap-2">
+    <div className="px-4 py-6">
+      <div className="max-w-7xl mx-auto p-3 px-4 bg-white border border-slate-100 shadow-lg rounded-lg">
+        <div className="flex flex-row justify-between items-stretch font-semibold gap-4">
           {/* Location Section */}
           <div className="flex items-center space-x-2 flex-1">
             <span className="material-symbols-outlined p-2 bg-gray-200 rounded-full">
@@ -120,7 +122,7 @@ const SearchSection = ({ searchCriteria, setSearchCriteria, isCompact, onSearchC
               text="Search"
               onClick={handleSearch}
               icon="search"
-              className="bg-black text-white hover:bg-slate-600 w-full lg:w-auto min-w-[120px]"
+              className="bg-black rounded text-white hover:bg-slate-600 w-full lg:w-auto min-w-[120px]"
             />
           </div>
         </div>
@@ -129,4 +131,4 @@ const SearchSection = ({ searchCriteria, setSearchCriteria, isCompact, onSearchC
   );
 };
 
-export default SearchSection;
+export default LargeSearchSection;

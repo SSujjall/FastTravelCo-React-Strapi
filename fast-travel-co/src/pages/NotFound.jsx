@@ -15,7 +15,7 @@ const NotFound = () => {
       </p>
 
       <Button
-        className={"max-w-40 text-white bg-black hover:bg-gray-700"}
+        className={"max-w-40 text-white rounded bg-black hover:bg-gray-700"}
         onClick={goToHome}
         text="Go Home"
       ></Button>

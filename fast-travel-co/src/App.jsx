@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import NotFound from "./pages/NotFound";
 import Index from "./pages/Home/Index";
 import "./App.css";
@@ -14,12 +15,17 @@ import Toast from "./components/Shared/Toast";
 import FooterSection from "./components/Shared/Footer";
 
 function App() {
+  const [searchCriteria, setSearchCriteria] = useState({});
+
   return (
     <BrowserRouter>
       <Toast />
-      <Navbar />
+      <Navbar
+        searchCriteria={searchCriteria}
+        setSearchCriteria={setSearchCriteria}
+      />
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<Index searchCriteria={searchCriteria} />} />
         <Route
           path="/destination/:documentId"
           element={<DestinationDetail />}
