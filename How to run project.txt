@@ -12,3 +12,7 @@ FOR BACK END:
 3. Type the command "npm rebuild better-sqlite3".
 4. Type the command "npm run develop"
 5. The project is running.
+
+CREDENTIALS FOR STRAPI ADMIN:
+Email : test@gmail.com
+Password : Test@123
