@@ -1,0 +1,1 @@
+-- You need to configure the roles (give permission of the tables to the users) before you use it.
